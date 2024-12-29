@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "71505256366",
+    "project_id": "ticketpass-1998",
+    "storage_bucket": "ticketpass-1998.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71505256366:android:bb665d7cb4a060d88fb23f",
+        "android_client_info": {
+          "package_name": "es.tiernoparla.proyecto.ticket_pass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLw2TN2jdY54t-WFdbp0DQt8Ets8C6Q-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
