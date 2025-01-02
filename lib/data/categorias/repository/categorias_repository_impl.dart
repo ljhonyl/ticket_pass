@@ -1,3 +1,4 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:ticket_pass/data/categorias/models/categoria_model.dart';
 import 'package:ticket_pass/data/categorias/source/categorias_firebase_service.dart';
@@ -16,7 +17,7 @@ class CategoriasRepositoryImpl extends CategoriasRepository{
     },
     (data){
       return Right(
-        CategoriaModel.fromMap(data)
+        List.from(data).map((toElement) => CategoriaModel.fromMap(toElement).toEntity()).toList()
       );
     }
     );

@@ -4,9 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
-import 'package:ticket_pass/common/widgets/button/boton_de_carga.dart';
 import 'package:ticket_pass/domain/auth/usecases/restablecer_password_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/inicio_sesion.dart';
+
+import '../../../common/widgets/botones/boton_de_carga.dart';
 
 class RestablecerPassword extends StatelessWidget {
   RestablecerPassword({super.key});

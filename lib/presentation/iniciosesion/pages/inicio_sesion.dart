@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
-import 'package:ticket_pass/common/widgets/button/boton_de_carga.dart';
 import 'package:ticket_pass/data/auth/models/usuario_inicio_sesion.dart';
 import 'package:ticket_pass/domain/auth/usecases/iniciar_sesion_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/app/pages/home.dart';
@@ -12,6 +11,7 @@ import 'package:ticket_pass/presentation/iniciosesion/pages/restablecer_password
 
 import '../../../common/bloc/button/boton_state.dart';
 import '../../../common/helper/navigator/app_navegacion.dart';
+import '../../../common/widgets/botones/boton_de_carga.dart';
 import '../../styles/app_styles.dart';
 
 class InicioSesion extends StatelessWidget {

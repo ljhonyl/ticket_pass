@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
-import 'package:ticket_pass/common/widgets/button/boton_de_carga.dart';
 import 'package:ticket_pass/data/auth/models/usuario.dart';
 import 'package:ticket_pass/domain/auth/usecases/registro_caso_de_uso.dart';
 
+import '../../../common/widgets/botones/boton_de_carga.dart';
 import '../../../core/configs/theme/app_colors.dart';
 
 class Registro extends StatelessWidget {

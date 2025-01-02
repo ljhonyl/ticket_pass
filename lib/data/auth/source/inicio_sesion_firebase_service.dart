@@ -16,15 +16,16 @@ class InicioSesionFirebaseServiceImpl extends InicioSesionFirebaseService{
   @override
   Future<Either> registrarse(Usuario usuario) async{
     try{
-      var datos = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      var usuarioFirebase = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: usuario.email!,
         password: usuario.password!,
       );
 
-      await FirebaseFirestore.instance.collection('Usuarios').doc(
-        datos.user!.uid
+      await FirebaseFirestore.instance.collection('usuarios').doc(
+        usuarioFirebase.user!.uid
       ).set(
         {
+          'id': usuarioFirebase.user!.uid,
           'nombre': usuario.nombre,
           'apellidos': usuario.apellidos,
           'email': usuario.email,

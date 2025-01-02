@@ -1,5 +1,5 @@
 import 'package:ticket_pass/domain/auth/repository/inicio_sesion_repository.dart';
-import 'package:ticket_pass/domain/auth/usecases/caso_de_uso.dart';
+import 'package:ticket_pass/domain/caso_de_uso.dart';
 
 import '../../../service_locator.dart';
 

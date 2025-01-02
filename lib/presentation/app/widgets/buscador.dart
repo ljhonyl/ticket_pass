@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/presentation/busqueda/pages/resultado_busqueda.dart';
 
 class Buscador extends StatelessWidget {
-  Buscador({super.key});
-
-  final TextEditingController textEditingController = TextEditingController();
+  const Buscador({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-          top: 40,
-          left: 8,
-          right: 8
+      padding: const EdgeInsets.symmetric(
+          horizontal: 16
       ),
       child: TextField(
-        controller: textEditingController,
-        onChanged: (value){
-          if (value.isEmpty) {
-          } else {
-          }
+        readOnly: true,
+        onTap: (){
+          AppNavegacion.push(context, const ResultadoBusqueda());
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(12),
@@ -29,7 +24,7 @@ class Buscador extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50)
             ),
-            hintText: 'Buscar'
+            hintText: 'search'
         ),
       ),
     );

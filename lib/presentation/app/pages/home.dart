@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_pass/presentation/app/widgets/buscador.dart';
-import 'package:ticket_pass/presentation/styles/app_styles.dart';
+import 'package:gap/gap.dart';
+import 'package:ticket_pass/presentation/app/widgets/categorias.dart';
+import 'package:ticket_pass/presentation/app/widgets/todos_eventos.dart';
+import 'package:ticket_pass/presentation/app/widgets/proximamente.dart';
+
+import '../widgets/buscador.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -11,18 +15,17 @@ class Home extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Gap(20),
             Buscador(),
-            _categoriasText(),
+            Gap(10),
+            Categorias(),
+            Gap(10),
+            Proximamente(),
+            Gap(10),
+            Entradas()
           ],
         ),
       ),
-    );
-  }
-
-  Widget _categoriasText(){
-    return Text(
-      "Categorías",
-      style: AppStyles.h2,
     );
   }
 }
