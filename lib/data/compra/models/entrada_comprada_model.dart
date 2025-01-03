@@ -18,7 +18,7 @@ class EntradaCompradaModel {
   }
 }
 
-extension EntradaCompradaXEntity on EntradaCompradaModel {
+extension EntradaCompradaXModel on EntradaCompradaModel {
   EntradaCompradaEntity toEntity() {
     return EntradaCompradaEntity(
       numeroEntrada: numeroEntrada,

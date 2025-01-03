@@ -16,27 +16,4 @@ class CompraEntity {
     required this.precioTotal,
     required this.entradas,
   });
-
-  factory CompraEntity.fromMap(Map<String, dynamic> map, List<EntradaCompradaEntity> entradas) {
-    return CompraEntity(
-      eventoId: map['eventoId'] as String,
-      nombreEvento: map['nombreEvento'] as String,
-      cantidad: map['cantidad'] as num,
-      precioTotal: map['precioTotal'] as num,
-      entradas: entradas,
-    );
-  }
 }
-
-extension CompraXModel on CompraEntity {
-  CompraModel toModel() {
-    return CompraModel(
-      eventoId: eventoId,
-      nombreEvento: nombreEvento,
-      cantidad: cantidad,
-      precioTotal: precioTotal,
-      entradas: entradas.map((entrada) => entrada.toModel()).toList(), // Cambio aquí para que use 'toModel'
-    );
-  }
-}
-

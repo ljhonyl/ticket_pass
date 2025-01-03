@@ -11,28 +11,5 @@ class EntradaCompradaEntity {
     required this.numeroEntrada,
     required this.fechaCompra,
   });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'numeroEntrada': numeroEntrada,
-      'fechaCompra': fechaCompra,
-    };
-  }
-
-  factory EntradaCompradaEntity.fromMap(Map<String, dynamic> map) {
-    return EntradaCompradaEntity(
-      numeroEntrada: map['numeroEntrada'] as String,
-      fechaCompra: map['fechaCompra'] as Timestamp,
-    );
-  }
-}
-
-extension EntradaCompradaXModel on EntradaCompradaEntity {
-  EntradaCompradaModel toModel() {
-    return EntradaCompradaModel(
-      numeroEntrada: numeroEntrada,
-      fechaCompra: fechaCompra,
-    );
-  }
 }
 

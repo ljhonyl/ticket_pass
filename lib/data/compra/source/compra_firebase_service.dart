@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../models/compra_model.dart';
+import '../models/entrada_comprada_model.dart';
 import '../models/peticion_compra_model.dart';
 
 abstract class CompraFirebaseService{
@@ -50,7 +52,6 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
 
   @override
   Future<Either> getEntradasCompradas(String eventoId) async {
-    print("Servicio");
     try{
       var usuarioFirebase = FirebaseAuth.instance.currentUser;
       var entradas = await FirebaseFirestore.instance
@@ -59,9 +60,26 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
           .collection(eventoId)
           .get();
 
-      return Right(entradas.docs.map((element) => element.data()).toList());
+      var datos = entradas.docs.map((element) {
+        var data = element.data();
+        print("Datos del documento: $data");
+
+        var entradasList = (data['entradas'] as List?)?.map((entrada) {
+          print("Entrada: $entrada");
+          return EntradaCompradaModel.fromMap(entrada as Map<String, dynamic>);
+        }).toList() ?? [];
+
+        print("Entradas mapeadas: $entradasList");
+
+        var compraModel = CompraModel.fromMap(data, entradasList);
+        return compraModel;
+      }).toList();
+
+
+      return Right(datos);
     }
     catch(e){
+      print("SERVICO LEFT");
       print(e.toString());
       return Left("Ocurrió un problema inesperado, intentelo de nuevo más tarde");
     }

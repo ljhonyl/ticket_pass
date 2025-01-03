@@ -16,13 +16,6 @@ class PeticionEntradaCompraModel {
       'fechaCompra': fechaCompra,
     };
   }
-
-  factory PeticionEntradaCompraModel.fromMap(Map<String, dynamic> map) {
-    return PeticionEntradaCompraModel(
-      numeroEntrada: map['numeroEntrada'] as String,
-      fechaCompra: map['fechaCompra'] as Timestamp,
-    );
-  }
 }
 
 extension PeticionEntradaCompraXModel on PeticionEntradaCompraModel {

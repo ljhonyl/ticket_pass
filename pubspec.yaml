@@ -42,6 +42,8 @@ dependencies:
   cloud_firestore: ^5.6.0
   get_it:
   flutter_bloc:
+  intl:
+  image_picker:
 
 dev_dependencies:
   flutter_test:

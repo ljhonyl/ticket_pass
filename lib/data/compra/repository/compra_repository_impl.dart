@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_pass/data/compra/source/compra_firebase_service.dart';
 import 'package:ticket_pass/domain/compra/entity/peticion_compra_entity.dart';
+import '../../../domain/compra/entity/compra_entity.dart';
 import '../../../domain/compra/repository/compra_repository.dart';
 import '../../../service_locator.dart';
 import '../models/compra_model.dart';
@@ -19,19 +20,15 @@ class CompraRepositoryImpl extends CompraRepository{
 
     return entradasCompradas.fold(
         (error){
+          print("REPOSITORIO ERROR");
           return Left(error);
         },
         (data){
-            return Right(
-              data.map((doc) {
-                // Si los datos contienen un campo 'entradas', conviértelo a una lista
-                var entradasList = (doc['entradas'] as List?)?.map((entrada) => EntradaCompradaModel.fromMap(entrada)).toList() ?? [];
+          var datos = (data as List<CompraModel>).map((compraModel) {
+            return compraModel.toEntity(); // Convierte CompraModel a CompraEntity
+          }).toList();
 
-                // Convierte el Map a CompraModel y luego a CompraEntity
-                var compraModel = CompraModel.fromMap(doc, entradasList);
-                return compraModel.toEntity();
-              }).toList(),
-            );
+          return Right(datos);
         }
     );
   }

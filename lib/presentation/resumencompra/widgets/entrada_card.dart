@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ticket_pass/domain/compra/entity/entrada_comprada_entity.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../core/configs/theme/app_colors.dart';
+import '../../../domain/compra/entity/entrada_comprada_entity.dart';
 
 class EntradaCard extends StatelessWidget {
   final EntradaCompradaEntity entrada;
@@ -13,6 +14,12 @@ class EntradaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Convertir Timestamp a DateTime
+    DateTime fechaCompra = (entrada.fechaCompra as Timestamp).toDate();
+
+    // Formatear la fecha solo a 'dd-MM-yyyy'
+    String formattedDate = DateFormat('dd-MM-yyyy').format(fechaCompra);
+
     return Container(
       height: 100,
       padding: const EdgeInsets.all(8),
@@ -73,7 +80,7 @@ class EntradaCard extends StatelessWidget {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: entrada.fechaCompra.toString(),
+                                      text: formattedDate,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
@@ -82,8 +89,7 @@ class EntradaCard extends StatelessWidget {
                                     )
                                   ]
                               )
-                          ),
-                          const SizedBox(width: 10, ),
+                          )
                         ],
                       )
                     ],
@@ -92,38 +98,6 @@ class EntradaCard extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'DEntro del expanded',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //context.read<CartProductsDisplayCubit>().removeProduct(productOrderedEntity);
-                  },
-                  child: Container(
-                    height: 23,
-                    width: 23,
-                    decoration: const BoxDecoration(
-                        color: Color(0xffFF8383),
-                        shape: BoxShape.circle
-                    ),
-                    child: const Icon(
-                      Icons.remove,
-                      size: 15,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )
         ],
       ),
     );

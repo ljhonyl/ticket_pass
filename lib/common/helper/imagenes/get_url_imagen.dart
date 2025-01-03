@@ -4,4 +4,7 @@ class GetUrlImagen{
   static String getImagenEntradaUrl(String imagen){
     return AppUrl.carpetaImagenes+ imagen +AppUrl.alt;
   }
+  static String getImagenUsuarioUrl(){
+    return AppUrl.imagenUsuario;
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ticket_pass/domain/compra/entity/compra_entity.dart';
 import 'package:ticket_pass/domain/compra/usescases/get_entradas_compradas_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/resumencompra/bloc/compra_realizada_state.dart';
 
