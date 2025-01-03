@@ -1,4 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
+import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
+import 'package:ticket_pass/data/crearevento/service/img_bb_service.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/categoria_select.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/entrada_texto.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/fecha.dart';
@@ -61,68 +67,94 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
         title: const Text("Crear Evento"),
         backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          _categorias.isNotEmpty
-          ? CategoriaSelect(
-          controller: _categoriaController,
-            label: "Categorías",
-            categorias: _categorias,
-            selectedCategory: _selectedCategory,
-            onChanged: (CategoriaEntity? value) {
-              setState(() {
-                _selectedCategory = value;
-              });
-            },
-          )
-                : const CircularProgressIndicator(),
-              // Descripción del evento
-              EntradaTexto(
-                controller: _descripcionController,
-                label: 'Descripción',
+      body: BlocProvider(
+        create: (context) => BotonStateCubit(),
+        child: SingleChildScrollView( // Permite hacer scroll en la pantalla
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Muestra las categorías si están disponibles, de lo contrario un cargador
+                  _categorias.isNotEmpty
+                      ? CategoriaSelect(
+                    controller: _categoriaController,
+                    label: "Categorías",
+                    categorias: _categorias,
+                    selectedCategory: _selectedCategory,
+                    onChanged: (CategoriaEntity? value) {
+                      setState(() {
+                        _selectedCategory = value;
+                      });
+                    },
+                  )
+                      : const CircularProgressIndicator(),
+                  // Descripción del evento
+                  EntradaTexto(
+                    controller: _descripcionController,
+                    label: 'Descripción',
+                  ),
+                  // Ubicación del evento
+                  EntradaTexto(
+                    controller: _ubicacionController,
+                    label: 'Ubicación',
+                    hintText: "Calle de ejemplo, Madrid, ES",
+                  ),
+                  // Precio
+                  Precio(controller: _precioController),
+                  // Fecha
+                  Fecha(controller: _fechaController),
+                  // Total Entradas
+                  TotalEntradas(controller: _totalEntradasController),
+                  // Selector de Imágenes
+                  ImagePickerWidget(
+                    images: _selectedImages,
+                    onImagesChanged: (images) {
+                      setState(() {
+                        _selectedImages = images;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  // Botón para enviar el formulario
+                  BotonDeCarga(
+                    onPressed: () async {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        if (_selectedImages.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Debes seleccionar al menos una imagen')),
+                          );
+                          return; // No continuar si no hay imágenes seleccionadas
+                        }
+
+                        print(_selectedCategory?.id);
+                        print(_descripcionController.text);
+                        print(_ubicacionController.text);
+                        print(_precioController.text);
+                        print(_fechaController.text);
+                        print(_totalEntradasController.text);
+                        try {
+                          var urls = await sl<ImgBBService>()
+                              .subirImagenes(_selectedImages.map((e) => File(e.path)).toList());
+                          urls.forEach((url) {
+                            print("en el foreach");
+                            print(url.toString());
+                          });
+                        } catch (e, stacktrace) {
+                          print('Error al subir las imágenes: $e');
+                          print('Stacktrace: $stacktrace');
+                        }
+                      } else {
+                        print("Campos erróneos");
+                      }
+                    },
+                    contenido: const Text('Crear Evento'),
+                  ),
+                ],
               ),
-              // Ubicación del evento
-              EntradaTexto(
-                controller: _ubicacionController,
-                label: 'Ubicación',
-                hintText: "Calle de ejemplo, Madrid, ES",
-              ),
-              // Precio
-              Precio(controller: _precioController),
-              // Fecha
-              Fecha(controller: _fechaController),
-              // Total Entradas
-              TotalEntradas(controller: _totalEntradasController),
-              // Selector de Imágenes
-              ImagePickerWidget(
-                images: _selectedImages,
-                onImagesChanged: (images) {
-                  setState(() {
-                    _selectedImages = images;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              // Botón para enviar el formulario
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    print(_selectedCategory!.id);
-                    print(_descripcionController.text);
-                    print(_ubicacionController.text);
-                    print(_precioController.text);
-                    print(_fechaController.text);
-                    print(_totalEntradasController.text);
-                  }
-                },
-                child: const Text('Crear Evento'),
-              ),
-            ],
+            ),
           ),
         ),
       ),

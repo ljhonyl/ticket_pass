@@ -23,10 +23,14 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   Future<void> _pickImages() async {
     final List<XFile>? pickedImages = await _picker.pickMultiImage();
 
-    if (pickedImages != null && pickedImages.length <= 5) {
-      widget.onImagesChanged(pickedImages);
-    } else {
-      if (pickedImages != null && pickedImages.length > 5) {
+    if (pickedImages != null && pickedImages.length > 0) {
+      // Agregar las imágenes seleccionadas a la lista sin reemplazar las existentes
+      final List<XFile> updatedImages = List.from(widget.images!);
+      updatedImages.addAll(pickedImages.where((img) => !updatedImages.contains(img)));
+
+      if (updatedImages.length <= 5) {
+        widget.onImagesChanged(updatedImages);
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Puedes seleccionar hasta 5 imágenes')),
         );
@@ -78,3 +82,4 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     );
   }
 }
+

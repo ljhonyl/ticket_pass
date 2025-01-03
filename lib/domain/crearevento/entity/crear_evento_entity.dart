@@ -5,9 +5,8 @@ import 'package:ticket_pass/data/crearevento/models/crear_evento_model.dart';
 
 class CrearEventoEntity {
   final String categoriaId;
-  final String id;
   final String nombre;
-  final List<String> imagenes;
+  final List<dynamic> imagenes;
   final Timestamp fecha;
   final String descripcion;
   final String ubicacion;
@@ -17,7 +16,6 @@ class CrearEventoEntity {
 
   CrearEventoEntity({
     required this.categoriaId,
-    required this.id,
     required this.nombre,
     required this.imagenes,
     required this.fecha,
@@ -25,17 +23,16 @@ class CrearEventoEntity {
     required this.ubicacion,
     required this.precio,
     required this.totalEntradas,
-    required this.entradasVendidas
+    this.entradasVendidas = 0
   });
 }
 
 extension CrearEventoXEntity on CrearEventoEntity {
-  CrearEventoModel toModel() {
+  CrearEventoModel toModel(List<String> listaUrls) {
     return CrearEventoModel(
         categoriaId: categoriaId,
-        id: id,
         nombre: nombre,
-        imagenes: imagenes,
+        imagenes: listaUrls,
         fecha: fecha,
         descripcion: descripcion,
         ubicacion: ubicacion,
