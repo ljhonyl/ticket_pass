@@ -14,7 +14,7 @@ class VentaFirebaseServiceImpl extends VentaFirebaseService{
       // Se realiza una transacción para los problemas de concurrencia
       var result = await FirebaseFirestore.instance.runTransaction((transaction) async {
         var entradasDisponiblesSnapshot = await FirebaseFirestore.instance
-            .collection('entradas')
+            .collection('eventos')
             .doc(entradas.eventoId)
             .collection('entradas')
             .where('estado', isEqualTo: 'disponible')

@@ -31,14 +31,14 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
 
       for (var entrada in compra.entradas){
         await FirebaseFirestore.instance
-            .collection('entradas')
+            .collection('eventos')
             .doc(compra.eventoId)
             .collection('entradas')
             .doc(entrada.numeroEntrada)
             .update({
               'estado': 'vendida',
               'comprador': usuarioFirebase.uid,
-              'fechaCompra': entrada.fechaCompra,
+              'fechaDeCompra': entrada.fechaCompra,
             });
       }
 

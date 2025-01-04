@@ -22,7 +22,7 @@ class ListaImagenes extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.fill,
                   image: NetworkImage(
-                   GetUrlImagen.getImagenEntradaUrl(imagenes[index])
+                   imagenes[index]
                   )
                 )
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_pass/common/helper/imagenes/get_url_imagen.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 import 'package:ticket_pass/presentation/detalle_evento/pages/detalle_evento.dart';
@@ -7,13 +6,13 @@ import 'package:ticket_pass/presentation/detalle_evento/pages/detalle_evento.dar
 
 class EventoCard extends StatelessWidget {
   final EventoEntity evento;
-  final double width; // Parámetro obligatorio para el ancho.
-  final double imageHeight; // Parámetro obligatorio para la altura de la imagen.
+  final double width;
+  final double imageHeight;
 
   const EventoCard({
     required this.evento,
-    required this.width, // Ancho obligatorio.
-    required this.imageHeight, // Altura obligatoria de la imagen.
+    required this.width,
+    required this.imageHeight,
     super.key,
   });
 
@@ -24,23 +23,22 @@ class EventoCard extends StatelessWidget {
         AppNavegacion.push(context, DetalleEntrada(entrada: evento));
       },
       child: Container(
-        width: width, // Usa el ancho proporcionado (ya es obligatorio).
+        width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagen en la parte superior
             Container(
-              height: imageHeight, // Usa la altura de imagen proporcionada (ya es obligatoria).
+              height: imageHeight,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    GetUrlImagen.getImagenEntradaUrl(evento.imagenes[0]),
+                    evento.imagenes[0],
                   ),
                 ),
                 borderRadius: const BorderRadius.only(
@@ -49,11 +47,9 @@ class EventoCard extends StatelessWidget {
                 ),
               ),
             ),
-            // Nombre y ubicación
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Nombre en negrita
                 Text(
                   evento.nombre,
                   style: const TextStyle(
@@ -63,9 +59,8 @@ class EventoCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                // Ubicación en texto normal
                 Text(
-                  evento.ubicacion ?? "Ubicación no disponible",
+                  evento.ubicacion,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w300,

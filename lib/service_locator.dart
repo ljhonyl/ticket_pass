@@ -7,6 +7,7 @@ import 'package:ticket_pass/data/categorias/repository/categorias_repository_imp
 import 'package:ticket_pass/data/categorias/source/categorias_firebase_service.dart';
 import 'package:ticket_pass/data/compra/repository/compra_repository_impl.dart';
 import 'package:ticket_pass/data/compra/source/compra_firebase_service.dart';
+import 'package:ticket_pass/data/crearevento/repository/crear_evento_repository_impl.dart';
 import 'package:ticket_pass/data/crearevento/service/crear_evento_firebase_service.dart';
 import 'package:ticket_pass/data/evento/repository/evento_repository_impl.dart';
 import 'package:ticket_pass/data/evento/source/evento_firebase_service.dart';
@@ -25,6 +26,7 @@ import 'package:ticket_pass/data/crearevento/service/img_bb_service.dart';
 import 'package:ticket_pass/domain/compra/repository/compra_repository.dart';
 import 'package:ticket_pass/domain/compra/usescases/compra_caso_de_uso.dart';
 import 'package:ticket_pass/domain/compra/usescases/get_entradas_compradas_caso_de_uso.dart';
+import 'package:ticket_pass/domain/crearevento/repository/crear_evento_repository.dart';
 import 'package:ticket_pass/domain/crearevento/usescases/crear_evento_caso_de_uso.dart';
 import 'package:ticket_pass/domain/evento/repository/evento_repository.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_evento_caso_de_uso.dart';
@@ -152,6 +154,10 @@ Future<void> iniciarDependencias() async {
 
   sl.registerSingleton<CrearEventoFirebaseService>(
       CrearEventoFirebaseServiceImpl()
+  );
+
+  sl.registerSingleton<CrearEventoRepository>(
+      CrearEventoRepositoryImpl()
   );
 
   sl.registerSingleton<CrearEventoCasoDeUso>(

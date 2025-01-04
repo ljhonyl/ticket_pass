@@ -26,7 +26,7 @@ class Precio extends StatelessWidget {
           if (value == null || value.isEmpty) {
             return msg;
           }
-          final number = int.tryParse(value);
+          final number = double.tryParse(value);
           if (number == null || number <= 0) {
             return msg;
           }

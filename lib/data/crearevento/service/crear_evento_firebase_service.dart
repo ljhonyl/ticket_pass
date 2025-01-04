@@ -12,6 +12,13 @@ class CrearEventoFirebaseServiceImpl extends CrearEventoFirebaseService{
   Future<Either> crearEvento(CrearEventoModel evento) async{
     print("Legamos al servico de compra de firebase");
     try{
+      print(evento.nombre);
+      print(evento.categoriaId);
+      print(evento.ubicacion);
+      print(evento.precio.toString());
+      print(evento.fecha.toString());
+      print(evento.totalEntradas.toString());
+      print(evento.descripcion);
       var usuarioFirebase = FirebaseAuth.instance.currentUser;
       Map<String, dynamic> eventoMap = evento.toMap();
       eventoMap['id'] = '';

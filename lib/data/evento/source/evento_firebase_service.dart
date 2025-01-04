@@ -16,7 +16,7 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService{
       final proximamente = hoy.add(Duration(days: 30));
 
       var datos = await FirebaseFirestore.instance.collection(
-        'entradas'
+        'eventos'
       ).where(
         'fecha',
         isGreaterThan: Timestamp.fromDate(hoy)
@@ -36,7 +36,7 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService{
   Future<Either> getEntradas() async{
     try{
       var datos = await FirebaseFirestore.instance.collection(
-          'entradas'
+          'eventos'
       ).get();
 
       return Right(datos.docs.map((item) => item.data()).toList());
@@ -50,7 +50,7 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService{
   Future<Either> getEntradasPorCategoria(String categoria) async {
     try{
       var datos = await FirebaseFirestore.instance.collection(
-          'entradas'
+          'eventos'
       ).where(
         'categoriaId',
         isEqualTo: categoria
@@ -67,7 +67,7 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService{
   Future<Either> getEntradaPorNombre(String nombre) async {
     try{
       var datos = await FirebaseFirestore.instance.collection(
-          'entradas'
+          'eventos'
       ).where(
           'nombre',
           isGreaterThanOrEqualTo: nombre

@@ -14,7 +14,7 @@ class CancelarCompraFirebaseServiceImpl extends CancelarCompraFirebaseService{
 
       for (var entrada in entradas){
         await FirebaseFirestore.instance
-            .collection('entradas')
+            .collection('eventos')
             .doc(entrada.eventoId)
             .collection('entradas')
             .doc(entrada.numeroEntrada)

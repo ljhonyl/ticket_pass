@@ -1,10 +1,9 @@
-import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
-import 'package:ticket_pass/data/crearevento/service/img_bb_service.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/categoria_select.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/entrada_texto.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/fecha.dart';
@@ -12,9 +11,10 @@ import 'package:ticket_pass/presentation/crearevento/widgets/image_picker_widget
 import 'package:ticket_pass/presentation/crearevento/widgets/precio.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/total_entradas.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../domain/categorias/entity/categoria_entity.dart';
 import '../../../domain/categorias/repository/categorias_repository.dart';
+import '../../../domain/crearevento/entity/crear_evento_entity.dart';
+import '../../../domain/crearevento/usescases/crear_evento_caso_de_uso.dart';
 import '../../../service_locator.dart';
 
 class CrearEventoPage extends StatefulWidget {
@@ -27,15 +27,17 @@ class CrearEventoPage extends StatefulWidget {
 class _CrearEventoPageState extends State<CrearEventoPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _categoriaController = TextEditingController();
+  final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _precioController = TextEditingController();
   final TextEditingController _fechaController = TextEditingController();
-  final TextEditingController _totalEntradasController = TextEditingController();
+  final TextEditingController _totalEntradasController =
+      TextEditingController();
   final TextEditingController _descripcionController = TextEditingController();
   final TextEditingController _ubicacionController = TextEditingController();
 
-  List<XFile> _selectedImages = [];
+  List<XFile> _imagenes = [];
   List<CategoriaEntity> _categorias = [];
-  CategoriaEntity? _selectedCategory;
+  CategoriaEntity? _categoriaSeleccionada;
 
   @override
   void initState() {
@@ -48,11 +50,12 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
   Future<void> _getCategorias() async {
     final resultado = await sl<CategoriasRepository>().getCategorias();
     resultado.fold(
-          (error) {
+      (error) {
         // Manejo de error si no se obtienen las categorías
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error)));
       },
-          (categorias) {
+      (categorias) {
         setState(() {
           _categorias = categorias;
         });
@@ -62,14 +65,12 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Crear Evento"),
-        backgroundColor: Colors.blue,
-      ),
-      body: BlocProvider(
-        create: (context) => BotonStateCubit(),
-        child: SingleChildScrollView( // Permite hacer scroll en la pantalla
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => BotonStateCubit()),
+      ],
+      child: Scaffold(
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -77,80 +78,85 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Muestra las categorías si están disponibles, de lo contrario un cargador
                   _categorias.isNotEmpty
                       ? CategoriaSelect(
-                    controller: _categoriaController,
-                    label: "Categorías",
-                    categorias: _categorias,
-                    selectedCategory: _selectedCategory,
-                    onChanged: (CategoriaEntity? value) {
-                      setState(() {
-                        _selectedCategory = value;
-                      });
-                    },
-                  )
+                          controller: _categoriaController,
+                          label: "Categorías",
+                          categorias: _categorias,
+                          selectedCategory: _categoriaSeleccionada,
+                          onChanged: (CategoriaEntity? value) {
+                            setState(() {
+                              _categoriaSeleccionada = value;
+                            });
+                          },
+                        )
                       : const CircularProgressIndicator(),
-                  // Descripción del evento
+                  EntradaTexto(controller: _nombreController, label: 'nombre'),
                   EntradaTexto(
                     controller: _descripcionController,
                     label: 'Descripción',
                   ),
-                  // Ubicación del evento
                   EntradaTexto(
                     controller: _ubicacionController,
                     label: 'Ubicación',
                     hintText: "Calle de ejemplo, Madrid, ES",
                   ),
-                  // Precio
                   Precio(controller: _precioController),
-                  // Fecha
                   Fecha(controller: _fechaController),
-                  // Total Entradas
                   TotalEntradas(controller: _totalEntradasController),
-                  // Selector de Imágenes
                   ImagePickerWidget(
-                    images: _selectedImages,
+                    images: _imagenes,
                     onImagesChanged: (images) {
                       setState(() {
-                        _selectedImages = images;
+                        _imagenes = images;
                       });
                     },
                   ),
                   const SizedBox(height: 20),
-                  // Botón para enviar el formulario
-                  BotonDeCarga(
-                    onPressed: () async {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        if (_selectedImages.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Debes seleccionar al menos una imagen')),
-                          );
-                          return; // No continuar si no hay imágenes seleccionadas
-                        }
-
-                        print(_selectedCategory?.id);
-                        print(_descripcionController.text);
-                        print(_ubicacionController.text);
-                        print(_precioController.text);
-                        print(_fechaController.text);
-                        print(_totalEntradasController.text);
-                        try {
-                          var urls = await sl<ImgBBService>()
-                              .subirImagenes(_selectedImages.map((e) => File(e.path)).toList());
-                          urls.forEach((url) {
-                            print("en el foreach");
-                            print(url.toString());
-                          });
-                        } catch (e, stacktrace) {
-                          print('Error al subir las imágenes: $e');
-                          print('Stacktrace: $stacktrace');
-                        }
-                      } else {
-                        print("Campos erróneos");
+                  BlocListener<BotonStateCubit, BotonState>(
+                    listener: (context,state){
+                      if(state is BotonHechoState){
+                        print("CONSEGUIDO");
                       }
+                      if(state is BotonErrorState){
+                        print("ERROR");
+                      }
+                      print("DEFAULT");
                     },
-                    contenido: const Text('Crear Evento'),
+                    child: Builder(
+                      builder: (context) {
+                        return BotonDeCarga(
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              if (_imagenes.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Debes seleccionar al menos una imagen')),
+                                );
+                                return;
+                              }
+                              print(_fechaController.text);
+                              context.read<BotonStateCubit>()..finalizar(
+                                    casoDeUso: CrearEventoCasoDeUso(),
+                                    params: CrearEventoEntity(
+                                        categoriaId: _categoriaSeleccionada!.id,
+                                        nombre: _nombreController.text,
+                                        imagenes: _imagenes,
+                                        fecha: Timestamp.fromDate(
+                                            DateTime.parse(_fechaController.text)),
+                                        descripcion: _descripcionController.text,
+                                        ubicacion: _ubicacionController.text,
+                                        precio: double.parse(_precioController.text),
+                                        totalEntradas: double.parse(
+                                            _totalEntradasController.text)),
+                                  );
+                            }
+                          },
+                          contenido: const Text('Crear Evento'),
+                        );
+                      }
+                    ),
                   ),
                 ],
               ),

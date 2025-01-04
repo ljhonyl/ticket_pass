@@ -39,11 +39,11 @@ class Proximamente extends StatelessWidget {
   }
 
   Widget _proximamenteText(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16), // Padding uniforme.
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16), // Padding uniforme.
       child: Align(
         alignment: Alignment.centerLeft, // Asegura que esté alineado a la izquierda.
-        child: const Text(
+        child: Text(
           'Proximamente',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -55,20 +55,20 @@ class Proximamente extends StatelessWidget {
   }
 
   Widget _proximamenteList(List<EventoEntity> proximamente, BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width; // Obtiene el ancho de la pantalla.
-    final cardWidth = screenWidth * 0.8; // Calcula el 80% del ancho para la tarjeta.
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = screenWidth * 0.8;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16), // Mantén el mismo padding.
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
-        height: 210, // La altura específica de la lista.
+        height: 210,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return EventoCard(
               evento: proximamente[index],
               width: cardWidth,
-              imageHeight: 150,// Pasamos el ancho a la tarjeta.
+              imageHeight: 150,
             );
           },
           separatorBuilder: (context, index) => const SizedBox(width: 10),

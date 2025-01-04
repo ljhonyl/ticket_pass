@@ -13,6 +13,7 @@ class CrearEventoRepositoryImpl extends CrearEventoRepository{
 
   @override
   Future<Either> crearEvento(CrearEventoEntity evento) async {
+    print("LLEGAMOS AL REPOSITORIO");
     try {
       List<File> files = evento.imagenes.map((imagen) {
         if (imagen is XFile) {
