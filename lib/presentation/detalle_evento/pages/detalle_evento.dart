@@ -37,11 +37,11 @@ class DetalleEntrada extends StatelessWidget {
                 Gap(20),
                 SeleccionarCantidad(entradaEntity: entrada),
                 Gap(20),
-                PasarACompra(entrada: entrada)
               ],
             ),
           ),
         ),
+        bottomNavigationBar: PasarACompra(entrada: entrada),
       ),
     );
   }
@@ -55,7 +55,7 @@ class DetalleEntrada extends StatelessWidget {
         Text("Ubicación:", style: AppStyles.h2),
         Text(entrada.ubicacion),
         const Gap(10),
-        Text("Descripción", style: AppStyles.h2),
+        Text("Descripción:", style: AppStyles.h2),
         Text(entrada.descripcion),
       ],
     );

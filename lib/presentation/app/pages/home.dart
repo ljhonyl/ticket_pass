@@ -19,17 +19,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
-  // Actualiza este método para que navegue a las páginas correspondientes
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
 
-    // Aquí gestionamos a qué página se navega dependiendo de la opción seleccionada
     if (_selectedIndex == 0) {
-      // Si seleccionas "Home", te quedas en esta pantalla, no navegas.
+      // Mantener en la página actual
     } else if (_selectedIndex == 1) {
-
+      // Añadir lógica si es necesario
     } else if (_selectedIndex == 2) {
       AppNavegacion.push(context, CuentaPage());
     }
@@ -38,18 +36,21 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Gap(40),
-            Buscador(),
-            Gap(10),
-            Categorias(),
-            Gap(10),
-            Proximamente(),
-            Gap(10),
-            Entradas()
-          ],
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16), // Padding global
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Gap(40),
+              Buscador(),
+              Gap(10),
+              Categorias(),
+              Gap(10),
+              Proximamente(),
+              Gap(10),
+              TodosEventos(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: MenuNavegacion(

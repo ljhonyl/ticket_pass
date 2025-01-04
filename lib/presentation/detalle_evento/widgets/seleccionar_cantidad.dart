@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 
+import '../../styles/app_styles.dart';
 import '../bloc/seleccionar_cantidad_cubit.dart';
 
 class SeleccionarCantidad extends StatelessWidget {
@@ -15,20 +17,17 @@ class SeleccionarCantidad extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.only(left: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
+        color: AppColors.fondoSecundario
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Quantity',
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14
-            ),
+          Text(
+            'Entradas',
+            style: AppStyles.cuerpo.copyWith(fontWeight: FontWeight.bold),
           ),
           Row(
             children: [

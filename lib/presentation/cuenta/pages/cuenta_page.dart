@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/presentation/crearevento/pages/crear_evento_page.dart';
+import 'package:ticket_pass/presentation/miseventos/pages/mis_eventos_page.dart';
 
 import '../../../common/helper/imagenes/get_url_imagen.dart';
 import '../../../common/widgets/menuinferior/menu_navegacion.dart';
@@ -40,7 +42,7 @@ class _CuentaPageState extends State<CuentaPage> {
         title: const Center(
           child: Text('Cuenta'),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: AppColors.primario,
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -95,8 +97,7 @@ class _CuentaPageState extends State<CuentaPage> {
                 title: const Text('Ver mis tickets'),
                 leading: const Icon(Icons.airplane_ticket),
                 onTap: () {
-                  // Aquí navegas a la pantalla de Tickets
-                  Navigator.pushNamed(context, '/tickets');
+                  AppNavegacion.push(context, MisEventosPage());
                 },
               ),
             ),

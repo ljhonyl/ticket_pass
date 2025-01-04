@@ -11,6 +11,10 @@ import 'package:ticket_pass/data/crearevento/repository/crear_evento_repository_
 import 'package:ticket_pass/data/crearevento/service/crear_evento_firebase_service.dart';
 import 'package:ticket_pass/data/evento/repository/evento_repository_impl.dart';
 import 'package:ticket_pass/data/evento/source/evento_firebase_service.dart';
+import 'package:ticket_pass/data/misentradas/repository/mis_entradas_repository_impl.dart';
+import 'package:ticket_pass/data/misentradas/service/mis_entradas_firebase_service.dart';
+import 'package:ticket_pass/data/miseventos/repository/mis_eventos_repository_impl.dart';
+import 'package:ticket_pass/data/miseventos/source/mis_eventos_firebase_service.dart';
 import 'package:ticket_pass/data/venta/repository/venta_repository_impl.dart';
 import 'package:ticket_pass/data/venta/source/venta_firebase_service.dart';
 import 'package:ticket_pass/domain/auth/usecases/iniciar_sesion_caso_de_uso.dart';
@@ -33,8 +37,13 @@ import 'package:ticket_pass/domain/evento/usescases/get_evento_caso_de_uso.dart'
 import 'package:ticket_pass/domain/evento/usescases/get_evento_por_categoria_caso_de_uso.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_evento_por_nombre_caso_de_uso.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_proximamente_caso_de_uso.dart';
+import 'package:ticket_pass/domain/misentradas/repository/mis_entradas_repository.dart';
+import 'package:ticket_pass/domain/misentradas/usescases/get_mis_compras_caso_de_uso.dart';
+import 'package:ticket_pass/domain/misventos/usescases/get_mis_eventos_caso_de_uso.dart';
 import 'package:ticket_pass/domain/venta/repository/venta_repository.dart';
 import 'package:ticket_pass/domain/venta/usescases/get_entradas_en_venta_caso_de_uso.dart';
+
+import 'domain/misventos/repository/mis_eventos_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -162,5 +171,32 @@ Future<void> iniciarDependencias() async {
 
   sl.registerSingleton<CrearEventoCasoDeUso>(
       CrearEventoCasoDeUso()
+  );
+
+  // Mis Eventos
+  sl.registerSingleton<MisEventosFirebaseService>(
+      MisEventosFirebaseServiceImpl()
+  );
+
+  sl.registerSingleton<MisEventosRepository>(
+      MisEventosRepositoryImpl()
+  );
+
+  sl.registerSingleton<GetMisEventosCasoDeUso>(
+      GetMisEventosCasoDeUso()
+  );
+
+  // Mis compras
+
+  sl.registerSingleton<MisEntradasFirebaseService>(
+      MisEntradasFirebaseServiceImpl()
+  );
+
+  sl.registerSingleton<MisEntradasRepository>(
+      MisEntradasRepositoryImpl()
+  );
+
+  sl.registerSingleton<GetMisComprasCasoDeUso>(
+      GetMisComprasCasoDeUso()
   );
 }

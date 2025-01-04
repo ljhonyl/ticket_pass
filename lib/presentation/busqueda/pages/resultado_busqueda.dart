@@ -19,33 +19,38 @@ class ResultadoBusqueda extends StatelessWidget {
       create: (context) =>
           EventoCubit(casoDeUso: sl<GetEventoPorNombreCasoDeUso>()),
       child: Scaffold(
-          body: Column(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16), // Aplicando padding como en la Home
+          child: Column(
             children: [
               Gap(80),
               Buscador(),
               Gap(20),
               _busquedaText(),
-              BlocBuilder<EventoCubit,EventoState>(
-                  builder: (context,state){
-                    if(state is EventoStateCargando){
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    if(state is EventoStateCargado){
-                      return state.entradas.isEmpty ? Container() :_entradasGridview(state.entradas);
-                    }
-                    return Container();
+              BlocBuilder<EventoCubit, EventoState>(
+                builder: (context, state) {
+                  if (state is EventoStateCargando) {
+                    return const Center(child: CircularProgressIndicator());
                   }
+                  if (state is EventoStateCargado) {
+                    return state.entradas.isEmpty
+                        ? Container()
+                        : _entradasGridview(state.entradas);
+                  }
+                  return Container();
+                },
               ),
             ],
-          )
+          ),
+        ),
       ),
     );
   }
 
   Widget _busquedaText() {
-    return Text(
+    return const Text(
       "Resultados para",
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
     );
   }
 
@@ -56,8 +61,8 @@ class ResultadoBusqueda extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.6),
+            mainAxisSpacing: 0,
+            childAspectRatio: 1),
         itemBuilder: (BuildContext context, int index) {
           return EventoCard(
               evento: entradas[index], width: 50, imageHeight: 100);

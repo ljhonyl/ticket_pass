@@ -23,7 +23,7 @@ class SplashPage extends StatelessWidget {
         }
       },
       child: const Scaffold(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.primario,
         body: Center(
           child: Text("APP"),
         ),

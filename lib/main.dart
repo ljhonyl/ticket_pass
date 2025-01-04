@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       create: (context) => SplashCubit()..iniciarApp(),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: AppTheme.appTheme,
+        theme: AppTheme.temaAplicacion,
         debugShowCheckedModeBanner: false,
         home: const SplashPage(),
       ),

@@ -14,7 +14,6 @@ abstract class CompraFirebaseService{
 class CompraFirebaseServiceImpl extends CompraFirebaseService{
   @override
   Future<Either> comprar(PeticionCompraModel compra) async{
-    print("Legamos al servico de compra de firebase");
     try{
       var usuarioFirebase = FirebaseAuth.instance.currentUser;
       await FirebaseFirestore.instance
@@ -27,6 +26,7 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
             'cantidad': compra.cantidad,
             'precioTotal': compra.precioTotal,
             'entradas': compra.entradas.map((entrada) => entrada.toMap()).toList(),
+            'fechaDeCompra': FieldValue.serverTimestamp()
           });
 
       for (var entrada in compra.entradas){
@@ -40,6 +40,22 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
               'comprador': usuarioFirebase.uid,
               'fechaDeCompra': entrada.fechaCompra,
             });
+      }
+
+      var eventoRef = FirebaseFirestore.instance
+          .collection('usuarios')
+          .doc(usuarioFirebase.uid)
+          .collection('eventos')
+          .doc(compra.eventoId);
+
+      var eventoDoc = await eventoRef.get();
+      if(!eventoDoc.exists){
+        await eventoRef.set({
+          'id': compra.eventoId,
+          'nombreEvento': compra.nombreEvento,
+          'fechaEvento': compra.fechaEvento,
+          'imagen': compra.imagen
+        });
       }
 
       return Right("Compra realizada con exito");
@@ -58,6 +74,8 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
           .collection('usuarios')
           .doc(usuarioFirebase!.uid)
           .collection(eventoId)
+          .orderBy('fechaDeCompra', descending: true)
+          .limit(1)
           .get();
 
       var datos = entradas.docs.map((element) {

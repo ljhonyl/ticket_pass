@@ -9,14 +9,14 @@ import '../../../common/bloc/evento/evento_cubit.dart';
 import '../../../common/bloc/evento/evento_state.dart';
 import '../../../common/widgets/tarjetas/evento_card.dart';
 
-class Entradas extends StatelessWidget {
-  const Entradas({super.key});
+class TodosEventos extends StatelessWidget {
+  const TodosEventos({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => EventoCubit(casoDeUso: sl<GetEventoCasoDeUso>())..mostrarEntradas(),
-      child: BlocBuilder<EventoCubit,EventoState>(
+      child: BlocBuilder<EventoCubit, EventoState>(
         builder: (context, state) {
           if (state is EventoStateCargando) {
             return const CircularProgressIndicator();
@@ -28,7 +28,7 @@ class Entradas extends StatelessWidget {
               children: [
                 _entradasText(),
                 const Gap(20),
-                _entradasList(context,state.entradas)
+                _entradasList(context, state.entradas)
               ],
             );
           }
@@ -39,10 +39,8 @@ class Entradas extends StatelessWidget {
   }
 
   Widget _entradasText() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
+    return const Align(
+      alignment: Alignment.centerLeft, // Alineado a la izquierda sin padding adicional
       child: Text(
         'Entradas',
         style: TextStyle(
@@ -54,22 +52,22 @@ class Entradas extends StatelessWidget {
   }
 
   Widget _entradasList(BuildContext context, List<EventoEntity> entradas) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16), // Mantén el mismo padding.
-      child: SizedBox(
-        height: 310, // La altura específica de la lista.
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return EventoCard(
-              evento: entradas[index],
-              width: 150,
-              imageHeight: 200,// Pasamos el ancho a la tarjeta.
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(width: 10),
-          itemCount: entradas.length,
-        ),
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = screenWidth * 0.5; // Ancho de las tarjetas ajustado al tamaño de pantalla
+
+    return SizedBox(
+      height: 310, // La altura específica de la lista.
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return EventoCard(
+            evento: entradas[index],
+            width: cardWidth,
+            imageHeight: 200, // Altura de la imagen
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        itemCount: entradas.length,
       ),
     );
   }

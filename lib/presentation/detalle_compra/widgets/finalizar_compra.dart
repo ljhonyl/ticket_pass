@@ -8,6 +8,7 @@ import 'package:ticket_pass/domain/compra/usescases/compra_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/resumencompra/pages/resumen_compra.dart';
 
 import '../../../common/bloc/button/boton_state.dart';
+import '../../styles/app_styles.dart';
 
 class FinalizarCompra extends StatelessWidget {
   final PeticionCompraEntity compra;
@@ -21,35 +22,29 @@ class FinalizarCompra extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<BotonStateCubit, BotonState>(
       listener: (context, state) {
-        print(state);
         if (state is BotonHechoState) {
-          AppNavegacion.pushReplacement(context, ResumenCompra(eventoId: compra.eventoId));
+          AppNavegacion.pushReplacement(context, ResumenCompra(eventoId: compra.eventoId, imagen: compra.imagen,));
         }
         if (state is BotonErrorState) {
-          print("estamos en finalizar compra ERROR");
+          var snackbar = SnackBar(content: Text(state.msgError), behavior: SnackBarBehavior.floating, );
+          ScaffoldMessenger.of(context).showSnackBar(snackbar);
         }
       },
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: BotonDeCarga(
           onPressed: () {
-            print(compra.toString());
-            print("Boton Finalizar Compra Pulsado");
-            context.read<BotonStateCubit>()..finalizar(
+            context.read<BotonStateCubit>().finalizar(
                 casoDeUso: CompraCasoDeUso(),
                 params: compra
             );
           },
-          contenido: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          contenido: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Finalizar Compra',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
+                style: AppStyles.textoBotonesPrimarios,
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_pass/domain/compra/usescases/get_entradas_compradas_caso_de_uso.dart';
+import 'package:ticket_pass/domain/misventos/usescases/get_mis_eventos_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/resumencompra/bloc/compra_realizada_state.dart';
 
 import '../../../service_locator.dart';
@@ -15,6 +16,18 @@ class CompraRealizadaCubit extends Cubit<CompraRealizadaState> {
           emit(CompraRealizadaError());
         },
         (data){
+          emit(CompraRealizadaCargada(entradas: data));
+        }
+    );
+  }
+  void mostrarCompras() async{
+    var compra = await sl<GetMisEventosCasoDeUso>().call();
+
+    compra.fold(
+            (error){
+          emit(CompraRealizadaError());
+        },
+            (data){
           emit(CompraRealizadaCargada(entradas: data));
         }
     );

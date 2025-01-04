@@ -1,4 +1,4 @@
-import '../../../domain/compra/entity/peticion_compra_entity.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'peticion_entrada_compra_model.dart';
 
 class PeticionCompraModel {
@@ -7,6 +7,8 @@ class PeticionCompraModel {
   final num cantidad;
   final num precioTotal;
   final List<PeticionEntradaCompraModel> entradas;
+  final Timestamp fechaEvento;
+  final String imagen;
 
   PeticionCompraModel({
     required this.eventoId,
@@ -14,6 +16,8 @@ class PeticionCompraModel {
     required this.cantidad,
     required this.precioTotal,
     required this.entradas,
+    required this.fechaEvento,
+    required this.imagen,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,16 +29,3 @@ class PeticionCompraModel {
     };
   }
 }
-
-extension PeticionCompraXModel on PeticionCompraModel {
-  PeticionCompraEntity toEntity() {
-    return PeticionCompraEntity(
-      eventoId: eventoId,
-      nombreEvento: nombreEvento,
-      cantidad: cantidad,
-      precioTotal: precioTotal,
-      entradas: entradas.map((entrada) => entrada.toEntity()).toList(),
-    );
-  }
-}
-

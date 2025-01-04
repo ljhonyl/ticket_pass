@@ -7,25 +7,20 @@ class Buscador extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16
-      ),
-      child: TextField(
-        readOnly: true,
-        onTap: (){
-          AppNavegacion.push(context, const ResultadoBusqueda());
-        },
-        decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(12),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50)
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50)
-            ),
-            hintText: 'search'
+    return TextField(
+      readOnly: true,
+      onTap: () {
+        AppNavegacion.push(context, const ResultadoBusqueda());
+      },
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(12),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        hintText: 'Buscar...',
       ),
     );
   }

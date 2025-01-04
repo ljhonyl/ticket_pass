@@ -8,7 +8,6 @@ import '../../../service_locator.dart';
 class GetEntradasCompradasCasoDeUso implements CasoDeUso<Either, String> {
   @override
   Future<Either> call({String ? params}) async{
-    print("CASO DE USO LLAMADO");
     return await sl<CompraRepository>().getEntradasCompradas(params!);
   }
 }

@@ -104,7 +104,7 @@ class Registro extends StatelessWidget {
   Widget _registraseButton(BuildContext context) {
     return Container(
       height: 100,
-      color: AppColors.secondBackground,
+      color: AppColors.fondoSecundario,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Center(
         child: Builder(

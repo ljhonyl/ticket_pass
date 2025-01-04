@@ -8,6 +8,7 @@ import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 import 'package:ticket_pass/domain/venta/usescases/get_entradas_en_venta_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/detalle_compra/pages/detalle_compra.dart';
 import 'package:ticket_pass/presentation/detalle_evento/bloc/seleccionar_cantidad_cubit.dart';
+import 'package:ticket_pass/presentation/styles/app_styles.dart';
 
 import '../../../common/bloc/button/boton_state.dart';
 
@@ -28,7 +29,6 @@ class PasarACompra extends StatelessWidget {
 
         return BlocListener<BotonStateCubit, BotonState>(
           listener: (context, state){
-            print(state);
             if(state is BotonHechoState){
               AppNavegacion.push(
                 context,
@@ -40,14 +40,15 @@ class PasarACompra extends StatelessWidget {
               );
             }
             if(state is BotonErrorState){
-              print("estamos en procesar compra ERROR");
+              var snackbar = SnackBar(content: Text(state.msgError), behavior: SnackBarBehavior.floating, );
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
           },
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: BotonDeCarga(
               onPressed: () {
-                context.read<BotonStateCubit>()..finalizar(
+                context.read<BotonStateCubit>().finalizar(
                     casoDeUso: GetEntradasEnVentaCasoDeUso(),
                     params: EntradaRequeridaModel(
                         entrada.id,
@@ -59,20 +60,12 @@ class PasarACompra extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    precioTotal.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                    precioTotal.toStringAsFixed(2),
+                    style: AppStyles.textoBotonesPrimarios,
                   ),
-                  const Text(
+                   Text(
                     'Procesar Compra',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                    style: AppStyles.textoBotonesPrimarios,
                   ),
                 ],
               ),

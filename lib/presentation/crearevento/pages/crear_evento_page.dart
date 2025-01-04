@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
@@ -11,11 +12,13 @@ import 'package:ticket_pass/presentation/crearevento/widgets/image_picker_widget
 import 'package:ticket_pass/presentation/crearevento/widgets/precio.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/total_entradas.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../core/configs/theme/app_colors.dart';
 import '../../../domain/categorias/entity/categoria_entity.dart';
 import '../../../domain/categorias/repository/categorias_repository.dart';
 import '../../../domain/crearevento/entity/crear_evento_entity.dart';
 import '../../../domain/crearevento/usescases/crear_evento_caso_de_uso.dart';
 import '../../../service_locator.dart';
+import '../../styles/app_styles.dart';
 
 class CrearEventoPage extends StatefulWidget {
   const CrearEventoPage({super.key});
@@ -70,9 +73,16 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
         BlocProvider(create: (context) => BotonStateCubit()),
       ],
       child: Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text('Crear Evento'),
+          ),
+          backgroundColor: AppColors.primario,
+          automaticallyImplyLeading: false,
+        ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
@@ -114,49 +124,67 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
                   ),
                   const SizedBox(height: 20),
                   BlocListener<BotonStateCubit, BotonState>(
-                    listener: (context,state){
-                      if(state is BotonHechoState){
-                        print("CONSEGUIDO");
-                      }
-                      if(state is BotonErrorState){
-                        print("ERROR");
-                      }
-                      print("DEFAULT");
-                    },
-                    child: Builder(
-                      builder: (context) {
-                        return BotonDeCarga(
-                          onPressed: () async {
-                            if (_formKey.currentState?.validate() ?? false) {
-                              if (_imagenes.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Debes seleccionar al menos una imagen')),
-                                );
-                                return;
-                              }
-                              print(_fechaController.text);
-                              context.read<BotonStateCubit>()..finalizar(
-                                    casoDeUso: CrearEventoCasoDeUso(),
-                                    params: CrearEventoEntity(
-                                        categoriaId: _categoriaSeleccionada!.id,
-                                        nombre: _nombreController.text,
-                                        imagenes: _imagenes,
-                                        fecha: Timestamp.fromDate(
-                                            DateTime.parse(_fechaController.text)),
-                                        descripcion: _descripcionController.text,
-                                        ubicacion: _ubicacionController.text,
-                                        precio: double.parse(_precioController.text),
-                                        totalEntradas: double.parse(
-                                            _totalEntradasController.text)),
-                                  );
-                            }
-                          },
-                          contenido: const Text('Crear Evento'),
+                    listener: (context, state) {
+                      if (state is BotonHechoState) {
+                        var snackbar = const SnackBar(
+                          content: Text("Evento Creado"),
+                          behavior: SnackBarBehavior.floating,
                         );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        _formKey.currentState?.reset();
+                        setState(() {
+                          _imagenes = [];
+                        });
+                        _categoriaController.clear();
+                        _nombreController.clear();
+                        _descripcionController.clear();
+                        _ubicacionController.clear();
+                        _precioController.clear();
+                        _fechaController.clear();
+                        _totalEntradasController.clear();
                       }
-                    ),
+                      if (state is BotonErrorState) {
+                        var snackbar = SnackBar(
+                          content: Text(state.msgError),
+                          behavior: SnackBarBehavior.floating,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                      }
+                    },
+                    child: Builder(builder: (context) {
+                      return BotonDeCarga(
+                        onPressed: () async {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            if (_imagenes.isEmpty) {
+                              var snackbar = const SnackBar(
+                                content: Text(
+                                    "Por favor seleccione al menos una imagen"),
+                                behavior: SnackBarBehavior.floating,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackbar);
+                              return;
+                            }
+                            context.read<BotonStateCubit>().finalizar(
+                                  casoDeUso: CrearEventoCasoDeUso(),
+                                  params: CrearEventoEntity(
+                                      categoriaId: _categoriaSeleccionada!.id,
+                                      nombre: _nombreController.text,
+                                      imagenes: _imagenes,
+                                      fecha: Timestamp.fromDate(DateTime.parse(
+                                          _fechaController.text)),
+                                      descripcion: _descripcionController.text,
+                                      ubicacion: _ubicacionController.text,
+                                      precio:
+                                          double.parse(_precioController.text),
+                                      totalEntradas: double.parse(
+                                          _totalEntradasController.text)),
+                                );
+                          }
+                        },
+                        contenido: Text('Crear Evento', style: AppStyles.textoBotonesPrimarios),
+                      );
+                    }),
                   ),
                 ],
               ),

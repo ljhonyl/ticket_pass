@@ -14,53 +14,36 @@ class Categorias extends StatelessWidget {
     return BlocProvider(
       create: (context) => CategoriasCubit()..mostrarCategorias(),
       child: BlocBuilder<CategoriasCubit, CategoriasState>(
-          builder: (context, state){
-            if(state is CategoriasCargando){
-              return CircularProgressIndicator();
-            }
-            if(state is CategoriasCargadas){
-              return Column(
-                children: [
-                  _verTodoText(context),
-                  _categoriasListView(state.categorias)
-                ],
-              );
-            }
-            return Container();
-          },
+        builder: (context, state) {
+          if (state is CategoriasCargando) {
+            return const CircularProgressIndicator();
+          }
+          if (state is CategoriasCargadas) {
+            return Column(
+              children: [
+                _tituloText(context),
+                _categoriasListView(state.categorias),
+              ],
+            );
+          }
+          return Container();
+        },
       ),
     );
   }
 
-  Widget _verTodoText(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Categorias',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16
-            ),
+  Widget _tituloText(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Categorias',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
-          GestureDetector(
-            onTap: (){
-              //AppNavigator.push(context, const AllCategoriesPage());
-            },
-            child: const Text(
-              'Ver todo',
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16
-              ),
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -69,16 +52,15 @@ class Categorias extends StatelessWidget {
       height: 40,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   AppNavegacion.push(
-                      context,
-                      EntradasPorCategoria(categoria: categorias[index])
+                    context,
+                    EntradasPorCategoria(categoria: categorias[index]),
                   );
                 },
                 child: Container(
@@ -104,5 +86,4 @@ class Categorias extends StatelessWidget {
       ),
     );
   }
-
 }

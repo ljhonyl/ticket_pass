@@ -7,8 +7,10 @@ import '../../../domain/compra/entity/entrada_comprada_entity.dart';
 
 class EntradaCard extends StatelessWidget {
   final EntradaCompradaEntity entrada;
+  final String imagen;
   const EntradaCard({
     required this.entrada,
+    required this.imagen,
     super.key
   });
 
@@ -24,7 +26,7 @@ class EntradaCard extends StatelessWidget {
       height: 100,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          color: AppColors.secondBackground,
+          color: AppColors.fondoSecundario,
           borderRadius: BorderRadius.circular(8)
       ),
       child: Row(
@@ -45,7 +47,7 @@ class EntradaCard extends StatelessWidget {
                         image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                                "j"
+                                imagen
                             )
                         ),
                         borderRadius: BorderRadius.circular(4)
@@ -72,9 +74,9 @@ class EntradaCard extends StatelessWidget {
                           Text.rich(
                               overflow: TextOverflow.ellipsis,
                               TextSpan(
-                                  text: 'Size - ',
+                                  text: 'Fecha de compra: ',
                                   style: const TextStyle(
-                                      color: Colors.grey,
+                                      color: AppColors.colorTextoTarjeta,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 10
                                   ),

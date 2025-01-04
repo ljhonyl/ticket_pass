@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../core/configs/theme/app_colors.dart';
+import '../../styles/app_styles.dart';
+
 class ImagePickerWidget extends StatefulWidget {
   final List<XFile>? images;
   final ValueChanged<List<XFile>> onImagesChanged;
@@ -31,9 +34,8 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       if (updatedImages.length <= 5) {
         widget.onImagesChanged(updatedImages);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Puedes seleccionar hasta 5 imágenes')),
-        );
+        var snackbar = SnackBar(content: Text("Puedes seleccionar hasta 5 imagenes"), behavior: SnackBarBehavior.floating, );
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }
     }
   }
@@ -45,7 +47,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       children: [
         ElevatedButton(
           onPressed: _pickImages,
-          child: const Text('Seleccionar Imágenes'),
+          child: Text('Seleccionar Imágenes', style: AppStyles.textoBotonesPrimarios.copyWith(fontSize: 14),),
         ),
         const SizedBox(height: 10),
         Wrap(

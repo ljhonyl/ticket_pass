@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/tarjetas/evento_card.dart';
 import 'package:ticket_pass/domain/compra/entity/peticion_compra_entity.dart';
@@ -9,6 +10,7 @@ import 'package:ticket_pass/domain/compra/entity/peticion_entrada_compra_entity.
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 import 'package:ticket_pass/domain/venta/entity/entrada_en_venta_entity.dart';
 import 'package:ticket_pass/presentation/detalle_compra/widgets/finalizar_compra.dart';
+import '../../../core/configs/theme/app_colors.dart';
 import '../../../domain/cancelarcompra/entity/entrada_cancelada_entity.dart';
 import '../../../domain/cancelarcompra/usecases/cancelar_compra_caso_de_uso.dart';
 
@@ -76,6 +78,9 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
 
   @override
   Widget build(BuildContext context) {
+    String fechaEvento = DateFormat('dd-MM-yyyy HH:mm').format(
+      widget.evento.fecha.toDate(),
+    );
     return BlocProvider(
       create: (context) => BotonStateCubit(),
       child: PopScope(
@@ -85,33 +90,57 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
           }
         },
         child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Gap(40),
-                EventoCard(
-                  evento: widget.evento,
-                  width: MediaQuery.of(context).size.width,
-                  imageHeight: 140,
-                ),
-                Gap(20),
-                Text("${widget.evento.precio} Euros"),
-                Gap(20),
-                Text("Detalles del precio"),
-                Text("Nº de entradas ${widget.entradas.length}\n Total: ${widget.precioTotal}"),
-                _entradas(),
-                FinalizarCompra(
-                  compra: PeticionCompraEntity(
-                    eventoId: widget.evento.id,
-                    nombreEvento: widget.evento.nombre,
-                    cantidad: widget.entradas.length,
-                    precioTotal: widget.precioTotal,
-                    entradas: _convertirEntradas(widget.entradas),
+          appBar: AppBar(
+            title: const Center(
+              child: Text('Compra'),
+            ),
+            backgroundColor: AppColors.primario,
+            automaticallyImplyLeading: false,
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  EventoCard(
+                    evento: widget.evento,
+                    width: MediaQuery.of(context).size.width,
+                    imageHeight: 140,
                   ),
-                ),
-              ],
+                  const Gap(10),
+                  _filaText(label: "Fecha de realizacion", dato: fechaEvento),
+                  const Gap(16),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Detalles del precio",),
+                    ],
+                  ),
+                  _filaText(label: "Nº de entradas:", dato: widget.entradas.length.toString()),
+                  _filaText(label: "Precio por entrada:", dato: "${widget.evento.precio.toStringAsFixed(2)}€"),
+                  _filaText(label: "Precio total:", dato: "${widget.precioTotal.toStringAsFixed(2)}€"),
+                  const Gap(16),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Entradas",)
+                    ],
+                  ),
+                  _entradas(),
+                ],
+              ),
+            ),
+          ),
+          bottomNavigationBar: FinalizarCompra(
+            compra: PeticionCompraEntity(
+                eventoId: widget.evento.id,
+                nombreEvento: widget.evento.nombre,
+                cantidad: widget.entradas.length,
+                precioTotal: widget.precioTotal,
+                entradas: _convertirEntradas(widget.entradas),
+                fechaEvento: widget.evento.fecha,
+                imagen: widget.evento.imagenes[0]
             ),
           ),
         ),
@@ -124,8 +153,13 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
       children: widget.entradas.map((entrada) {
         return Column(
           children: [
-            Text(entrada.numeroEntrada),
-            Gap(10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Numero de entrada:"),
+                Text(entrada.numeroEntrada),
+              ],
+            ),
           ],
         );
       }).toList(),
@@ -140,5 +174,15 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
         fechaCompra: fechaCompra,
       );
     }).toList();
+  }
+
+  Widget _filaText({required String label, required String dato}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label),
+        Text(dato),
+      ],
+    );
   }
 }
