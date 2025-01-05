@@ -14,27 +14,31 @@ class TodosEventos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => EventoCubit(casoDeUso: sl<GetEventoCasoDeUso>())..mostrarEntradas(),
-      child: BlocBuilder<EventoCubit, EventoState>(
-        builder: (context, state) {
-          if (state is EventoStateCargando) {
-            return const CircularProgressIndicator();
-          }
-          if (state is EventoStateCargado) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _entradasText(),
-                const Gap(20),
-                _entradasList(context, state.entradas)
-              ],
-            );
-          }
-          return Container();
-        },
-      ),
+    return Column(
+      children: [
+        _entradasText(),
+        const Gap(10),
+        BlocProvider(
+          create: (context) => EventoCubit(casoDeUso: sl<GetEventoCasoDeUso>())..mostrarEntradas(),
+          child: BlocBuilder<EventoCubit, EventoState>(
+            builder: (context, state) {
+              if (state is EventoStateCargando) {
+                return const CircularProgressIndicator();
+              }
+              if (state is EventoStateCargado) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _entradasList(context, state.entradas)
+                  ],
+                );
+              }
+              return Container();
+            },
+          ),
+        ),
+      ],
     );
   }
 

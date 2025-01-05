@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ticket_pass/data/crearevento/service/crear_evento_firebase_service.dart';
-import 'package:ticket_pass/data/crearevento/service/img_bb_service.dart';
+import 'package:ticket_pass/common/service/img_bb_service.dart';
 import 'package:ticket_pass/domain/crearevento/entity/crear_evento_entity.dart';
 
 import '../../../domain/crearevento/repository/crear_evento_repository.dart';
@@ -13,7 +13,6 @@ class CrearEventoRepositoryImpl extends CrearEventoRepository{
 
   @override
   Future<Either> crearEvento(CrearEventoEntity evento) async {
-    print("LLEGAMOS AL REPOSITORIO");
     try {
       List<File> files = evento.imagenes.map((imagen) {
         if (imagen is XFile) {

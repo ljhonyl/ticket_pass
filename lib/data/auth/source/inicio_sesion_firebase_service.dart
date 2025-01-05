@@ -29,6 +29,7 @@ class InicioSesionFirebaseServiceImpl extends InicioSesionFirebaseService{
           'nombre': usuario.nombre,
           'apellidos': usuario.apellidos,
           'email': usuario.email,
+          'imagen': ''
         }
       );
 
@@ -50,7 +51,7 @@ class InicioSesionFirebaseServiceImpl extends InicioSesionFirebaseService{
   @override
   Future<Either> iniciarSesion(UsuarioInicioSesion usuario) async {
     try{
-      var respuesta = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: usuario.email!,
         password: usuario.password!,
       );

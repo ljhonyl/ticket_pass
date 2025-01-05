@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/categoria_select.dart';
-import 'package:ticket_pass/presentation/crearevento/widgets/entrada_texto.dart';
+import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/fecha.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/image_picker_widget.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/precio.dart';

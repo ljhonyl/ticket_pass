@@ -20,6 +20,7 @@ class CompraRealizadaCubit extends Cubit<CompraRealizadaState> {
         }
     );
   }
+
   void mostrarCompras() async{
     var compra = await sl<GetMisEventosCasoDeUso>().call();
 

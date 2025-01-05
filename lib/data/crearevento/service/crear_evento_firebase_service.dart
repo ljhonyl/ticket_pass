@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ticket_pass/data/crearevento/models/crear_evento_model.dart';
 
@@ -23,6 +24,7 @@ class CrearEventoFirebaseServiceImpl extends CrearEventoFirebaseService{
       Map<String, dynamic> eventoMap = evento.toMap();
       eventoMap['id'] = '';
       eventoMap['organizador'] = usuarioFirebase!.uid;
+      eventoMap['nombreNormalizado'] = normalizarNombre(evento.nombre);
       var eventoRef = await FirebaseFirestore.instance.collection('eventos').add(eventoMap);
       await FirebaseFirestore.instance.collection('eventos').doc(eventoRef.id).update({'id': eventoRef.id});
 
@@ -51,5 +53,16 @@ class CrearEventoFirebaseServiceImpl extends CrearEventoFirebaseService{
       print(e.toString());
       return Left("Ocurrió un problema inesperado, intentelo de nuevo más tarde");
     }
+  }
+
+  String normalizarNombre(String nombre){
+    String nombreAux = nombre.toLowerCase();
+    nombreAux = nombreAux.replaceAll('ñ', '{{ñ}}');
+    nombreAux = removeDiacritics(nombreAux);
+    nombreAux = nombreAux.replaceAll('{{n}}', 'ñ');
+    nombreAux = nombreAux.replaceAll(" ", "");
+    nombreAux = nombreAux.replaceAll(RegExp(r'[^a-z0-9ñ]'), '');
+
+    return nombreAux;
   }
 }

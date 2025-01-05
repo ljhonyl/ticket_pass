@@ -16,7 +16,7 @@ class MiCompraCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Convertir Timestamp a DateTime y formatear la fecha
-    String formattedDateCompra = DateFormat('dd-MM-yyyy').format(
+    String formattedDateCompra = DateFormat('dd-MM-yyyy  HH-mm').format(
         compra.entradas.isNotEmpty ? compra.entradas[0].fechaCompra.toDate() : DateTime.now()
     );
 
@@ -47,7 +47,7 @@ class MiCompraCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Precio total: €${compra.precioTotal}',
+              'Precio total: ${compra.precioTotal.toStringAsFixed(2)}€',
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),

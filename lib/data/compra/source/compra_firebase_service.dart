@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../models/compra_model.dart';
 import '../models/entrada_comprada_model.dart';
 import '../models/peticion_compra_model.dart';

@@ -1,14 +1,20 @@
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/data/auth/repository/inicio_sesion_repository_impl.dart';
 import 'package:ticket_pass/data/auth/source/inicio_sesion_firebase_service.dart';
 import 'package:ticket_pass/data/cancelarcompra/repository/cancelar_compra_repository_impl.dart';
 import 'package:ticket_pass/data/cancelarcompra/service/cancelar_compra_firebase_service.dart';
 import 'package:ticket_pass/data/categorias/repository/categorias_repository_impl.dart';
 import 'package:ticket_pass/data/categorias/source/categorias_firebase_service.dart';
+import 'package:ticket_pass/data/cerrarsesion/repository/cerrar_sesion_repository_impl.dart';
+import 'package:ticket_pass/data/cerrarsesion/service/cerrar_sesion_firebase_service.dart';
 import 'package:ticket_pass/data/compra/repository/compra_repository_impl.dart';
 import 'package:ticket_pass/data/compra/source/compra_firebase_service.dart';
 import 'package:ticket_pass/data/crearevento/repository/crear_evento_repository_impl.dart';
 import 'package:ticket_pass/data/crearevento/service/crear_evento_firebase_service.dart';
+import 'package:ticket_pass/data/cuenta/repository/cuenta_repository_impl.dart';
+import 'package:ticket_pass/data/cuenta/service/cuenta_firebase_service.dart';
 import 'package:ticket_pass/data/evento/repository/evento_repository_impl.dart';
 import 'package:ticket_pass/data/evento/source/evento_firebase_service.dart';
 import 'package:ticket_pass/data/misentradas/repository/mis_entradas_repository_impl.dart';
@@ -26,12 +32,17 @@ import 'package:ticket_pass/domain/cancelarcompra/repository/cancelar_compra_rep
 import 'package:ticket_pass/domain/cancelarcompra/usecases/cancelar_compra_caso_de_uso.dart';
 import 'package:ticket_pass/domain/categorias/repository/categorias_repository.dart';
 import 'package:ticket_pass/domain/categorias/usecases/get_categorias_caso_de_uso.dart';
-import 'package:ticket_pass/data/crearevento/service/img_bb_service.dart';
+import 'package:ticket_pass/common/service/img_bb_service.dart';
+import 'package:ticket_pass/domain/cerrarsesion/repository/cerrar_sesion_repository.dart';
+import 'package:ticket_pass/domain/cerrarsesion/usescases/cerrar_sesion_caso_de_uso.dart';
 import 'package:ticket_pass/domain/compra/repository/compra_repository.dart';
 import 'package:ticket_pass/domain/compra/usescases/compra_caso_de_uso.dart';
 import 'package:ticket_pass/domain/compra/usescases/get_entradas_compradas_caso_de_uso.dart';
 import 'package:ticket_pass/domain/crearevento/repository/crear_evento_repository.dart';
 import 'package:ticket_pass/domain/crearevento/usescases/crear_evento_caso_de_uso.dart';
+import 'package:ticket_pass/domain/cuenta/usescases/get_cuenta_caso_de_uso.dart';
+import 'package:ticket_pass/domain/cuenta/repository/cuenta_repository.dart';
+import 'package:ticket_pass/domain/cuenta/usescases/set_imagen_caso_de_uso.dart';
 import 'package:ticket_pass/domain/evento/repository/evento_repository.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_evento_caso_de_uso.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_evento_por_categoria_caso_de_uso.dart';
@@ -173,7 +184,7 @@ Future<void> iniciarDependencias() async {
       CrearEventoCasoDeUso()
   );
 
-  // Mis Eventos
+  // ----------------- Mis Eventos -----------------
   sl.registerSingleton<MisEventosFirebaseService>(
       MisEventosFirebaseServiceImpl()
   );
@@ -186,7 +197,7 @@ Future<void> iniciarDependencias() async {
       GetMisEventosCasoDeUso()
   );
 
-  // Mis compras
+  // ----------------- Mis compras -----------------
 
   sl.registerSingleton<MisEntradasFirebaseService>(
       MisEntradasFirebaseServiceImpl()
@@ -198,5 +209,40 @@ Future<void> iniciarDependencias() async {
 
   sl.registerSingleton<GetMisComprasCasoDeUso>(
       GetMisComprasCasoDeUso()
+  );
+
+  // ----------------- Cuenta -----------------
+  sl.registerSingleton<CuentaFirebaseService>(
+      CuentaFirebaseServiceImpl()
+  );
+
+  sl.registerSingleton<CuentaRepository>(
+      CuentaRepositoryImpl()
+  );
+
+  sl.registerSingleton<GetCuentaCasoDeUso>(
+      GetCuentaCasoDeUso()
+  );
+
+  sl.registerSingleton<SetImagenCasoDeUso>(
+      SetImagenCasoDeUso()
+  );
+
+  // ----------------- Cerrar Sesion -----------------
+  sl.registerSingleton<CerrarSesionFirebaseService>(
+      CerrarSesionFirebaseServiceImpl()
+  );
+
+  sl.registerSingleton<CerrarSesionRepository>(
+      CerrarSesionRepositoryImpl()
+  );
+
+  sl.registerSingleton<CerrarSesionCasoDeUso>(
+      CerrarSesionCasoDeUso()
+  );
+
+  // ----------------- ImagePicker -----------------
+  sl.registerSingleton<ImagePicker>(
+      ImagePicker()
   );
 }

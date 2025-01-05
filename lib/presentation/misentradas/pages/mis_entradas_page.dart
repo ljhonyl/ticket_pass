@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/compra/entity/compra_entity.dart';
 import 'package:ticket_pass/domain/misentradas/entity/mi_compra_entity.dart';
+import 'package:ticket_pass/presentation/menuinferior/pages/menu_inferior.dart';
 import 'package:ticket_pass/presentation/misentradas/bloc/mis_entradas_cubit.dart';
 import 'package:ticket_pass/presentation/misentradas/bloc/mis_entradas_state.dart';
 import 'package:ticket_pass/presentation/misentradas/widgets/mi_compra_card.dart';
@@ -25,9 +27,9 @@ class MisEntradasPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: const Text('Resumen de la Compra'),
+          child: const Text('Mis Entradas'),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: AppColors.primario,
         automaticallyImplyLeading: false,
       ),
       body: BlocProvider(
@@ -52,7 +54,7 @@ class MisEntradasPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: BotonSimple(
           onPressed: () {
-            AppNavegacion.pushReplacement(context, Home());
+            AppNavegacion.pushReplacement(context, const MenuInferior());
           },
           titulo: 'Volver al Inicio',
         ),

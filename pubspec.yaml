@@ -37,13 +37,16 @@ dependencies:
   cupertino_icons: ^1.0.8
   gap: ^3.0.1
   firebase_core: ^3.8.1
-  dartz:
+  dartz: ^0.10.1
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.6.0
-  get_it:
-  flutter_bloc:
-  intl:
-  image_picker:
+  get_it: ^8.0.3
+  flutter_bloc: ^8.1.6
+  intl: ^0.20.1
+  image_picker: ^1.1.2
+  get: ^4.6.6
+  fluentui_icons: ^1.0.0
+  diacritic: ^0.1.6
 
 dev_dependencies:
   flutter_test:

@@ -4,10 +4,14 @@ import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/domain/auth/usecases/restablecer_password_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/inicio_sesion.dart';
+import 'package:ticket_pass/presentation/styles/app_styles.dart';
 
 import '../../../common/widgets/botones/boton_de_carga.dart';
+import '../../../common/widgets/entradatexto/entrada_texto.dart';
+import '../../../core/configs/theme/app_colors.dart';
 
 class RestablecerPassword extends StatelessWidget {
   RestablecerPassword({super.key});
@@ -17,6 +21,13 @@ class RestablecerPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Restablecer Contraseña'),
+        ),
+        backgroundColor: AppColors.primario,
+        automaticallyImplyLeading: false,
+      ),
       body: BlocProvider(
         create: (context) => BotonStateCubit(),
         child:  BlocListener<BotonStateCubit,BotonState>(
@@ -39,20 +50,19 @@ class RestablecerPassword extends StatelessWidget {
               });
             }
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 40
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _tituloText(),
-                Gap(20),
-                _emailTextField(),
-                Gap(20),
-                _restablecerPasswordButton(),
-              ],
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Recuperacion", style: AppStyles.h2,),
+                  Gap(20),
+                  EntradaTexto(controller: _emailCon, label: "Email", tipoDetexto: TextInputType.emailAddress,),
+                  Gap(20),
+                  _restablecerPasswordButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -62,19 +72,10 @@ class RestablecerPassword extends StatelessWidget {
 
   Widget _tituloText() {
     return const Text(
-      'Restablecer Contraseña',
+      'Solicitar Email',
       style: TextStyle(
           fontSize: 32,
           fontWeight: FontWeight.bold
-      ),
-    );
-  }
-
-  Widget _emailTextField() {
-    return TextField(
-      controller: _emailCon,
-      decoration: const InputDecoration(
-          hintText: 'Intoduce el email'
       ),
     );
   }
@@ -88,7 +89,8 @@ class RestablecerPassword extends StatelessWidget {
                     casoDeUso: RestablecerPasswordCasoDeUso(),
                     params: _emailCon.text
                 );
-              }
+              },
+            contenido: Text("Solicitar recuperación", style: AppStyles.textoBotonesPrimarios,),
           );
         }
     );

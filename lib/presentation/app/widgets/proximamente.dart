@@ -14,34 +14,41 @@ class Proximamente extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => EventoCubit(casoDeUso: sl<GetProximamenteCasoDeUso>())..mostrarEntradas(),
-      child: BlocBuilder<EventoCubit, EventoState>(
-        builder: (context, state) {
-          if (state is EventoStateCargando) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is EventoStateCargado) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _proximamenteText(context),
-                const Gap(20),
-                _proximamenteList(state.entradas, context),
-              ],
-            );
-          }
-          return Container();
-        },
-      ),
+    return Column(
+      children: [
+        _proximamenteText(),
+        const Gap(10),
+        SizedBox(
+          height: 210,
+          child: BlocProvider(
+            create: (context) => EventoCubit(casoDeUso: sl<GetProximamenteCasoDeUso>())..mostrarEntradas(),
+            child: BlocBuilder<EventoCubit, EventoState>(
+              builder: (context, state) {
+                if (state is EventoStateCargando) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is EventoStateCargado) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _proximamenteList(state.entradas, context),
+                    ],
+                  );
+                }
+                return Container();
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _proximamenteText(BuildContext context) {
-    return Align(
+  Widget _proximamenteText() {
+    return const Align(
       alignment: Alignment.centerLeft, // Asegura que esté alineado a la izquierda.
-      child: const Text(
+      child: Text(
         'Proximamente',
         style: TextStyle(
           fontWeight: FontWeight.bold,

@@ -3,8 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
+import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/data/auth/models/usuario.dart';
 import 'package:ticket_pass/domain/auth/usecases/registro_caso_de_uso.dart';
+import 'package:ticket_pass/presentation/iniciosesion/pages/inicio_sesion.dart';
+import 'package:ticket_pass/presentation/iniciosesion/widgets/password.dart';
+import 'package:ticket_pass/presentation/styles/app_styles.dart';
 
 import '../../../common/widgets/botones/boton_de_carga.dart';
 import '../../../core/configs/theme/app_colors.dart';
@@ -16,15 +22,23 @@ class Registro extends StatelessWidget {
   final TextEditingController _apellidosCon = TextEditingController();
   final TextEditingController _emailCon = TextEditingController();
   final TextEditingController _passwordCon = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => BotonStateCubit()),
-        ],
-        child: BlocListener<BotonStateCubit, BotonState>(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => BotonStateCubit()),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text('Registro'),
+          ),
+          backgroundColor: AppColors.primario,
+          automaticallyImplyLeading: false,
+        ),
+        body: BlocListener<BotonStateCubit, BotonState>(
           listener: (context, state) {
             if (state is BotonErrorState) {
               var snackbar = SnackBar(
@@ -33,70 +47,38 @@ class Registro extends StatelessWidget {
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
+            if(state is BotonHechoState){
+              AppNavegacion.pushReplacement(context, InicioSesion());
+            }
           },
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 40,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Introduce tus datos", style: AppStyles.h2,),
+                        EntradaTexto(controller: _nombreCon, label: "Nombre", hintText: "Ingresa tu nombre",),
+                        const Gap(20),
+                        EntradaTexto(controller: _apellidosCon, label: "Apellidos", hintText: "Ingresa tus apellidos",),
+                        const Gap(20),
+                        EntradaTexto(controller: _emailCon, label: "Email", hintText: "Ingresa tu correo electrónico", tipoDetexto: TextInputType.emailAddress,),
+                        const Gap(20),
+                        Password(controller: _passwordCon),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _nombreTextField(),
-                      const Gap(20),
-                      _apellidosTextField(),
-                      const Gap(20),
-                      _emailTextField(),
-                      const Gap(20),
-                      _passwordTextField(),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20), // Añadimos espacio manualmente
-                _registraseButton(context),
-              ],
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _nombreTextField() {
-    return TextField(
-      controller: _nombreCon,
-      decoration: const InputDecoration(
-        hintText: "Nombre",
-      ),
-    );
-  }
-
-  Widget _apellidosTextField() {
-    return TextField(
-      controller: _apellidosCon,
-      decoration: const InputDecoration(
-        hintText: "Apellidos",
-      ),
-    );
-  }
-
-  Widget _emailTextField() {
-    return TextField(
-      controller: _emailCon,
-      decoration: const InputDecoration(
-        hintText: "Email",
-      ),
-    );
-  }
-
-  Widget _passwordTextField() {
-    return TextField(
-      controller: _passwordCon,
-      decoration: const InputDecoration(
-        hintText: "Contraseña",
+        bottomNavigationBar: _registraseButton(context),
       ),
     );
   }
@@ -111,16 +93,18 @@ class Registro extends StatelessWidget {
           builder: (context) {
             return BotonDeCarga(
               onPressed: () {
-                var usuario = Usuario(
-                  nombre: _nombreCon.text,
-                  apellidos: _apellidosCon.text,
-                  email: _emailCon.text,
-                  password: _passwordCon.text,
-                );
-                context.read<BotonStateCubit>().finalizar(
-                  casoDeUso: RegistroCasoDeUso(),
-                  params: usuario,
-                );
+                if (_formKey.currentState?.validate() ?? false) {
+                  var usuario = Usuario(
+                    nombre: _nombreCon.text,
+                    apellidos: _apellidosCon.text,
+                    email: _emailCon.text,
+                    password: _passwordCon.text,
+                  );
+                  context.read<BotonStateCubit>().finalizar(
+                        casoDeUso: RegistroCasoDeUso(),
+                        params: usuario,
+                      );
+                }
               },
               titulo: 'Registrarse',
             );

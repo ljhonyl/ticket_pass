@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
+import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
+import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/data/auth/models/usuario_inicio_sesion.dart';
 import 'package:ticket_pass/domain/auth/usecases/iniciar_sesion_caso_de_uso.dart';
-import 'package:ticket_pass/presentation/app/pages/home.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/registro.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/restablecer_password.dart';
+import 'package:ticket_pass/presentation/iniciosesion/widgets/password.dart';
+import 'package:ticket_pass/presentation/menuinferior/pages/menu_inferior.dart';
 
 import '../../../common/bloc/button/boton_state.dart';
 import '../../../common/helper/navigator/app_navegacion.dart';
@@ -23,46 +27,54 @@ class InicioSesion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(12),
-            child: BlocProvider(
-              create: (context) => BotonStateCubit(),
-              child: BlocListener<BotonStateCubit, BotonState>(
-                listener: (context, state) {
-                  if (state is BotonErrorState) {
-                    var snackbar = SnackBar(
-                      content: Text(state.msgError),
-                      behavior: SnackBarBehavior.floating,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                  }
-                  if(state is BotonHechoState){
-                    AppNavegacion.pushReplacement(context, Home());
-                  }
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Inicio Sesión'),
+        ),
+        backgroundColor: AppColors.primario,
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
+          child: BlocProvider(
+            create: (context) => BotonStateCubit(),
+            child: BlocListener<BotonStateCubit, BotonState>(
+              listener: (context, state) {
+                if (state is BotonErrorState) {
+                  var snackbar = SnackBar(
+                    content: Text(state.msgError),
+                    behavior: SnackBarBehavior.floating,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+                if(state is BotonHechoState){
+                  AppNavegacion.pushReplacement(context, const MenuInferior());
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: AppSizes.getMaxHeight(context)*0.2,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("TICKET PASS",style: AppStyles.titulos,)
                       ],
                     ),
-                    const Gap(80),
-                    _titulo(),
-                    const Gap(20),
-                    _email(),
-                    const Gap(10),
-                    _password(),
-                    Gap(20),
-                    _inicarSesionButton(context),
-                    const Gap(20),
-                    _crearCuentaRestablecerPasswordText(context),
-                  ],
-                ),
+                  ),
+                  const Gap(10),
+                  _titulo(),
+                  const Gap(20),
+                  EntradaTexto(controller: _emailCon, label: "Email", tipoDetexto: TextInputType.emailAddress,),
+                  const Gap(10),
+                  Password(controller: _passwordCon),
+                  const Gap(20),
+                  _inicarSesionButton(context),
+                  const Gap(20),
+                  _crearCuentaRestablecerPasswordText(context),
+                ],
               ),
             ),
           ),
@@ -75,22 +87,6 @@ class InicioSesion extends StatelessWidget {
     return Text(
       "Iniciar Sesión",
       style: AppStyles.h1,
-    );
-  }
-  Widget _email(){
-    return TextField(
-      controller: _emailCon,
-      decoration: InputDecoration(
-          hintText: "Email"
-      ),
-    );
-  }
-  Widget _password(){
-    return TextField(
-      controller: _passwordCon,
-      decoration: InputDecoration(
-          hintText: "Contraseña"
-      ),
     );
   }
 
@@ -111,7 +107,7 @@ class InicioSesion extends StatelessWidget {
   }
 
   Widget _crearCuentaRestablecerPasswordText(BuildContext context){
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,7 +129,7 @@ class InicioSesion extends StatelessWidget {
                 ]
             ),
           ),
-          Gap(10),
+          const Gap(10),
           RichText(
               text: TextSpan(
                   text: "¿Olvidaste la contraseña?",

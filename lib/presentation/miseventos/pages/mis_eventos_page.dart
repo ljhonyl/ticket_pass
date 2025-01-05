@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:ticket_pass/common/widgets/tarjetas/evento_card.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
-import 'package:ticket_pass/domain/compra/entity/compra_entity.dart';
 import 'package:ticket_pass/domain/misventos/entity/mi_evento_entity.dart';
-import 'package:ticket_pass/presentation/misentradas/widgets/mi_compra_card.dart';
 import 'package:ticket_pass/presentation/miseventos/bloc/mi_evento_cubit.dart';
 import 'package:ticket_pass/presentation/miseventos/bloc/mi_evento_state.dart';
-import 'package:ticket_pass/presentation/resumencompra/bloc/compra_realizada_cubit.dart';
-import 'package:ticket_pass/presentation/resumencompra/bloc/compra_realizada_state.dart';
-import '../../../common/helper/navigator/app_navegacion.dart';
-import '../../../common/widgets/botones/boton_simple.dart';
-import '../../app/pages/home.dart';
+import '../../../core/configs/layaout/app_sizes.dart';
+import '../../../core/url/app_url.dart';
 import '../widgets/mi_evento_card.dart';
+import '../widgets/sin_eventos_card.dart';
 
 class MisEventosPage extends StatelessWidget {
 
@@ -37,12 +32,25 @@ class MisEventosPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             if (state is MiEventostateCargado) {
-              return Column(
-                children: [
-                  Expanded(child: _entradas(state.eventos)),
-                  const Gap(20), // Espacio entre la lista y el botón
-                ],
-              );
+              if(state.eventos.isNotEmpty){
+                return Column(
+                  children: [
+                    Expanded(child: _entradas(state.eventos)),
+                    const Gap(20), // Espacio entre la lista y el botón
+                  ],
+                );
+              }
+              else{
+                print(AppUrl.imagenSinEventos);
+                return Center(
+                  child: SinEventosCard(
+                      imageUrl: AppUrl.imagenSinEventos,
+                      height: AppSizes.getMaxHeight(context)*0.7,
+                      width: AppSizes.getMaxWidth(context)*0.9
+                  ),
+                );
+              }
+
             }
             return const Center(child: Text('No se encontraron entradas.'));
           },

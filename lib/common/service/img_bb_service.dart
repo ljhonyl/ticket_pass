@@ -24,7 +24,6 @@ class ImgBBService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print("Respuesta de ImgBB: $data");
       return data['data']['url'];
     } else {
       throw Exception("Error al subir la imagen: ${response.body}");

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_evento_por_nombre_caso_de_uso.dart';
 
 import '../../../common/bloc/evento/evento_cubit.dart';
@@ -19,11 +20,17 @@ class ResultadoBusqueda extends StatelessWidget {
       create: (context) =>
           EventoCubit(casoDeUso: sl<GetEventoPorNombreCasoDeUso>()),
       child: Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text('Busqueda'),
+          ),
+          backgroundColor: AppColors.primario,
+          automaticallyImplyLeading: false,
+        ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16), // Aplicando padding como en la Home
+          padding: const EdgeInsets.all(16), // Aplicando padding como en la Home
           child: Column(
             children: [
-              Gap(80),
               Buscador(),
               Gap(20),
               _busquedaText(),

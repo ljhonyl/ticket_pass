@@ -60,7 +60,7 @@ class PasarACompra extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    precioTotal.toStringAsFixed(2),
+                    '${precioTotal.toStringAsFixed(2)}€',
                     style: AppStyles.textoBotonesPrimarios,
                   ),
                    Text(

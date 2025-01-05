@@ -23,11 +23,11 @@ class EntradaTexto extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Por favor ingresa el $label';
+            return 'Por favor ingresa un valor valido para : $label';
           }
           return null;
         },

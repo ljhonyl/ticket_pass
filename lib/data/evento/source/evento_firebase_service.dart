@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:diacritic/diacritic.dart';
 
 abstract class EventoFirebaseService{
   Future<Either> getProximamente();
@@ -66,11 +67,12 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService{
   @override
   Future<Either> getEntradaPorNombre(String nombre) async {
     try{
+      var nombreBuscado = normalizarNombre(nombre);
       var datos = await FirebaseFirestore.instance.collection(
           'eventos'
       ).where(
-          'nombre',
-          isGreaterThanOrEqualTo: nombre
+          'nombreNormalizado',
+          isGreaterThanOrEqualTo: nombreBuscado
       ).get();
 
       return Right(datos.docs.map((item) => item.data()).toList());
@@ -80,4 +82,14 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService{
     }
   }
 
+  String normalizarNombre(String nombre){
+    String nombreAux = nombre.toLowerCase();
+    nombreAux = nombreAux.replaceAll('ñ', '{{ñ}}');
+    nombreAux = removeDiacritics(nombreAux);
+    nombreAux = nombreAux.replaceAll('{{n}}', 'ñ');
+    nombreAux = nombreAux.replaceAll(" ", "");
+    nombreAux = nombreAux.replaceAll(RegExp(r'[^a-z0-9ñ]'), '');
+
+    return nombreAux;
+  }
 }
