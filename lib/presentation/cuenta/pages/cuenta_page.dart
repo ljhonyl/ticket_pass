@@ -2,6 +2,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/cerrarsesion/usescases/cerrar_sesion_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/cuenta/bloc/cuenta_cubit.dart';
@@ -42,8 +43,14 @@ class CuentaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Cuenta'),
+        title: Padding (
+          padding: EdgeInsets.only(left: AppSizes.getMaxWidth(context)*0.135),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Cuenta'),
+            ],
+          ),
         ),
         backgroundColor: AppColors.primario,
         automaticallyImplyLeading: false,

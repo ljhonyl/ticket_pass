@@ -18,6 +18,7 @@ class MisEntradasFirebaseServiceImpl extends MisEntradasFirebaseService {
           .collection("usuarios")
           .doc(usuarioFirebase!.uid)
           .collection(eventoId)
+          .orderBy('fechaDeCompra')
           .get();
 
       var compras = comprasDocs.docs.map((doc) {

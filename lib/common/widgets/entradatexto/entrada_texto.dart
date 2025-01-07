@@ -4,12 +4,15 @@ class EntradaTexto extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final String hintText;
+  final bool esTipoEmail;
   final TextInputType tipoDetexto;
+
   const EntradaTexto({
     super.key,
     required this.controller,
     required this.label,
     this.hintText = "",
+    this.esTipoEmail = false,
     this.tipoDetexto = TextInputType.text,
   });
 
@@ -28,6 +31,13 @@ class EntradaTexto extends StatelessWidget {
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Por favor ingresa un valor valido para : $label';
+          }
+          if (esTipoEmail){
+            String validarEmail = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+            RegExp regExp = RegExp(validarEmail);
+            if (!regExp.hasMatch(value)) {
+              return 'Por favor ingresa un correo electrónico válido';
+            }
           }
           return null;
         },

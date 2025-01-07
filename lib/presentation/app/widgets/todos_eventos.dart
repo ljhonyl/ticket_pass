@@ -45,7 +45,7 @@ class TodosEventos extends StatelessWidget {
     return const Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        'Entradas',
+        'Eventos',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );

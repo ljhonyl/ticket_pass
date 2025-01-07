@@ -8,6 +8,7 @@ import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/data/auth/models/usuario_inicio_sesion.dart';
 import 'package:ticket_pass/domain/auth/usecases/iniciar_sesion_caso_de_uso.dart';
+import 'package:ticket_pass/presentation/ayuda/ayuda_page.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/registro.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/restablecer_password.dart';
 import 'package:ticket_pass/presentation/iniciosesion/widgets/password.dart';
@@ -16,6 +17,7 @@ import 'package:ticket_pass/presentation/menuinferior/pages/menu_inferior.dart';
 import '../../../common/bloc/button/boton_state.dart';
 import '../../../common/helper/navigator/app_navegacion.dart';
 import '../../../common/widgets/botones/boton_de_carga.dart';
+import '../../../core/url/app_url.dart';
 import '../../styles/app_styles.dart';
 
 class InicioSesion extends StatelessWidget {
@@ -28,11 +30,26 @@ class InicioSesion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Inicio Sesión'),
+        title: Padding (
+          padding: EdgeInsets.only(left: AppSizes.getMaxWidth(context)*0.135),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Inicio Sesión'),
+            ],
+          ),
         ),
         backgroundColor: AppColors.primario,
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline), // Icono de ayuda
+            tooltip: 'Ayuda',
+            onPressed: () {
+              AppNavegacion.push(context, AyudaPage(pdfUrl: AppUrl.ayudaInicioSesion,));
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -132,7 +149,7 @@ class InicioSesion extends StatelessWidget {
           const Gap(10),
           RichText(
               text: TextSpan(
-                  text: "¿Olvidaste la contraseña?",
+                  text: "¿Olvidó la contraseña?",
                   recognizer: TapGestureRecognizer()..onTap=(){
                     AppNavegacion.push(context, RestablecerPassword());
                   },

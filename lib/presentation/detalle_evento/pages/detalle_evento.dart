@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 import 'package:ticket_pass/presentation/detalle_evento/bloc/seleccionar_cantidad_cubit.dart';
@@ -47,6 +48,7 @@ class DetalleEntrada extends StatelessWidget {
   }
 
   Widget _nombreUbicacionDescripcionText() {
+    String fecha = DateFormat('dd-MM-yyyy  HH:mm').format(entrada.fecha.toDate());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,6 +56,9 @@ class DetalleEntrada extends StatelessWidget {
         const Gap(10),
         Text("Ubicación:", style: AppStyles.h2),
         Text(entrada.ubicacion),
+        const Gap(10),
+        Text("Fecha de realizacion", style: AppStyles.h2,),
+        Text(fecha),
         const Gap(10),
         Text("Descripción:", style: AppStyles.h2),
         Text(entrada.descripcion),

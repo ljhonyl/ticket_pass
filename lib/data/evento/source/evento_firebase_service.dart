@@ -19,6 +19,7 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService {
           .collection('eventos')
           .where('fecha', isGreaterThan: Timestamp.fromDate(hoy))
           .where('fecha', isLessThanOrEqualTo: Timestamp.fromDate(proximamente))
+          .orderBy('fecha')
           .get();
 
       return Right(datos.docs.map((item) => item.data()).toList());
@@ -30,7 +31,10 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService {
   @override
   Future<Either> getEntradas() async {
     try {
-      var datos = await FirebaseFirestore.instance.collection('eventos').get();
+      var datos = await FirebaseFirestore.instance
+          .collection('eventos')
+          .orderBy('fecha')
+          .get();
 
       return Right(datos.docs.map((item) => item.data()).toList());
     } catch (e) {
@@ -44,6 +48,7 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService {
       var datos = await FirebaseFirestore.instance
           .collection('eventos')
           .where('categoriaId', isEqualTo: categoria)
+          .orderBy('fecha')
           .get();
 
       return Right(datos.docs.map((item) => item.data()).toList());
@@ -55,7 +60,9 @@ class EventoFirebaseServiceImpl extends EventoFirebaseService {
   @override
   Future<Either> getEntradaPorNombre() async {
     try {
-      var datos = await FirebaseFirestore.instance.collection('eventos').get();
+      var datos = await FirebaseFirestore.instance.collection('eventos')
+          .orderBy('fecha')
+          .get();
 
       return Right(datos.docs.map((item) => item.data()).toList());
     } catch (e) {

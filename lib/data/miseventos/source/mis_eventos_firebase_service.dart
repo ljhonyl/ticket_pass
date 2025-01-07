@@ -17,6 +17,7 @@ class MisEventosFirebaseServiceImpl extends MisEventosFirebaseService {
           .collection("usuarios")
           .doc(usuarioFirebase!.uid)
           .collection('eventos')
+          .orderBy('fechaEvento')
           .get();
 
       var eventos = eventosDocs.docs.map((doc) {

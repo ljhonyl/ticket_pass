@@ -66,7 +66,7 @@ class Registro extends StatelessWidget {
                         const Gap(20),
                         EntradaTexto(controller: _apellidosCon, label: "Apellidos", hintText: "Ingresa tus apellidos",),
                         const Gap(20),
-                        EntradaTexto(controller: _emailCon, label: "Email", hintText: "Ingresa tu correo electrónico", tipoDetexto: TextInputType.emailAddress,),
+                        EntradaTexto(controller: _emailCon, label: "Email", hintText: "Ingresa tu correo electrónico", esTipoEmail: true,tipoDetexto: TextInputType.emailAddress,),
                         const Gap(20),
                         Password(controller: _passwordCon),
                       ],

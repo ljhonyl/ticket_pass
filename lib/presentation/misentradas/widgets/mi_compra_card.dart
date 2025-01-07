@@ -15,7 +15,7 @@ class MiCompraCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDateCompra = DateFormat('dd-MM-yyyy  HH-mm').format(
+    String fecha = DateFormat('dd-MM-yyyy  HH:mm').format(
         compra.entradas.isNotEmpty
             ? compra.entradas[0].fechaCompra.toDate()
             : DateTime.now());
@@ -37,7 +37,7 @@ class MiCompraCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Fecha de compra: $formattedDateCompra',
+              'Fecha de compra: $fecha',
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 8),
