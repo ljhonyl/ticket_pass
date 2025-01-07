@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 
 class MenuNavegacion extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemTapped;
 
   const MenuNavegacion({
-    Key? key,
+    super.key,
     required this.selectedIndex,
     required this.onItemTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class MenuNavegacion extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.airplane_ticket),
+          icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
           label: 'Tickets',
         ),
         BottomNavigationBarItem(

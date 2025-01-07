@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
+import 'package:ticket_pass/domain/categorias/usecases/get_categorias_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/categoria_select.dart';
 import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/fecha.dart';
@@ -44,16 +45,13 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
   @override
   void initState() {
     super.initState();
-    // Llamar al backend para obtener las categorías
     _getCategorias();
   }
 
-  // Llamada al backend para obtener las categorías
   Future<void> _getCategorias() async {
-    final resultado = await sl<CategoriasRepository>().getCategorias();
+    final resultado = await sl<GetCategoriasCasoDeUso>().call();
     resultado.fold(
       (error) {
-        // Manejo de error si no se obtienen las categorías
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(error)));
       },
@@ -99,7 +97,7 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
                             });
                           },
                         )
-                      : const CircularProgressIndicator(),
+                      : const Center(child: CircularProgressIndicator()),
                   EntradaTexto(controller: _nombreController, label: 'nombre'),
                   EntradaTexto(
                     controller: _descripcionController,
@@ -181,7 +179,8 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
                                 );
                           }
                         },
-                        contenido: Text('Crear Evento', style: AppStyles.textoBotonesPrimarios),
+                        contenido: Text('Crear Evento',
+                            style: AppStyles.textoBotonesPrimarios),
                       );
                     }),
                   ),

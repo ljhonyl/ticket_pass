@@ -1,30 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_pass/common/bloc/evento/evento_cubit.dart';
+import 'package:ticket_pass/presentation/busqueda/bloc/buscador_cubit.dart';
 
 class Buscador extends StatelessWidget {
-  Buscador({super.key});
+  const Buscador({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (value) {
-        if (value.isEmpty) {
-          context.read<EventoCubit>().setEstadoInicial();
-        } else {
-          context.read<EventoCubit>().mostrarEntradas(params: value);
-        }
-      },
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(12),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        hintText: 'Buscar',
+    return BlocBuilder<BuscadorCubit, String>(
+      builder: (context, state) => Column(
+        children: [
+          TextField(
+            onChanged: (value) {
+              context.read<BuscadorCubit>().actualizarTexto(value);
+              if (value.isEmpty) {
+                context.read<EventoCubit>().setEstadoInicial();
+              } else {
+                context.read<EventoCubit>().mostrarEntradas(params: value);
+              }
+            },
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(12),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              hintText: 'Buscar',
+            ),
+          ),
+          _busquedaText(state),
+        ],
       ),
+    );
+  }
+
+  Widget _busquedaText(String busqueda) {
+    if (busqueda == '') {
+      busqueda = 'Sin resultados';
+    } else {
+      busqueda = 'Resultados para $busqueda';
+    }
+    return Text(
+      busqueda,
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
     );
   }
 }

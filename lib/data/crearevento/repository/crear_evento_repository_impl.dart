@@ -9,8 +9,7 @@ import 'package:ticket_pass/domain/crearevento/entity/crear_evento_entity.dart';
 import '../../../domain/crearevento/repository/crear_evento_repository.dart';
 import '../../../service_locator.dart';
 
-class CrearEventoRepositoryImpl extends CrearEventoRepository{
-
+class CrearEventoRepositoryImpl extends CrearEventoRepository {
   @override
   Future<Either> crearEvento(CrearEventoEntity evento) async {
     try {
@@ -24,7 +23,6 @@ class CrearEventoRepositoryImpl extends CrearEventoRepository{
         }
       }).toList();
 
-      // Paso 2: Subir las imágenes y obtener las URLs
       List<String> urls = await sl<ImgBBService>().subirImagenes(files);
 
       var eventoModel = evento.toModel(urls);

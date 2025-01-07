@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/data/auth/repository/inicio_sesion_repository_impl.dart';
 import 'package:ticket_pass/data/auth/source/inicio_sesion_firebase_service.dart';
 import 'package:ticket_pass/data/cancelarcompra/repository/cancelar_compra_repository_impl.dart';
@@ -61,188 +60,113 @@ final sl = GetIt.instance;
 Future<void> iniciarDependencias() async {
   //  ----------------- Inicio de Sesión  -----------------
   sl.registerSingleton<InicioSesionFirebaseService>(
-      InicioSesionFirebaseServiceImpl()
-  );
+      InicioSesionFirebaseServiceImpl());
 
-  sl.registerSingleton<InicioSesionRepository>(
-      InicioSesionRepositoryImpl()
-  );
+  sl.registerSingleton<InicioSesionRepository>(InicioSesionRepositoryImpl());
 
-  sl.registerSingleton<RegistroCasoDeUso>(
-      RegistroCasoDeUso()
-  );
+  sl.registerSingleton<RegistroCasoDeUso>(RegistroCasoDeUso());
 
-  sl.registerSingleton<IniciarSesionCasoDeUso>(
-      IniciarSesionCasoDeUso()
-  );
+  sl.registerSingleton<IniciarSesionCasoDeUso>(IniciarSesionCasoDeUso());
 
   sl.registerSingleton<RestablecerPasswordCasoDeUso>(
-      RestablecerPasswordCasoDeUso()
-  );
+      RestablecerPasswordCasoDeUso());
 
-  sl.registerSingleton<SesionEnCursoCasoDeUso>(
-      SesionEnCursoCasoDeUso()
-  );
+  sl.registerSingleton<SesionEnCursoCasoDeUso>(SesionEnCursoCasoDeUso());
 
   // ----------------- Home -----------------
-  sl.registerSingleton<CategoriasRepository>(
-      CategoriasRepositoryImpl()
-  );
+  sl.registerSingleton<CategoriasRepository>(CategoriasRepositoryImpl());
 
   sl.registerSingleton<CategoriasFirebaseService>(
-      CategoriasFirebaseServiceImpl()
-  );
+      CategoriasFirebaseServiceImpl());
 
-  sl.registerSingleton<GetCategoriasCasoDeUso>(
-      GetCategoriasCasoDeUso()
-  );
+  sl.registerSingleton<GetCategoriasCasoDeUso>(GetCategoriasCasoDeUso());
 
-  sl.registerSingleton<EventoFirebaseService>(
-      EventoFirebaseServiceImpl()
-  );
+  sl.registerSingleton<EventoFirebaseService>(EventoFirebaseServiceImpl());
 
-  sl.registerSingleton<EventoRepository>(
-      EventoRepositoryImpl()
-  );
+  sl.registerSingleton<EventoRepository>(EventoRepositoryImpl());
 
-  sl.registerSingleton<GetProximamenteCasoDeUso>(
-      GetProximamenteCasoDeUso()
-  );
+  sl.registerSingleton<GetProximamenteCasoDeUso>(GetProximamenteCasoDeUso());
 
-  sl.registerSingleton<GetEventoCasoDeUso>(
-      GetEventoCasoDeUso()
-  );
+  sl.registerSingleton<GetEventoCasoDeUso>(GetEventoCasoDeUso());
 
   sl.registerSingleton<GetEventoPorCategoriaCasoDeUso>(
-      GetEventoPorCategoriaCasoDeUso()
-  );
+      GetEventoPorCategoriaCasoDeUso());
 
   sl.registerSingleton<GetEventoPorNombreCasoDeUso>(
-      GetEventoPorNombreCasoDeUso()
-  );
-
+      GetEventoPorNombreCasoDeUso());
 
   //  ----------------- Venta -----------------
-  sl.registerSingleton<VentaFirebaseService>(
-      VentaFirebaseServiceImpl()
-  );
+  sl.registerSingleton<VentaFirebaseService>(VentaFirebaseServiceImpl());
 
-  sl.registerSingleton<VentaRepository>(
-      VentaRepositoryImpl()
-  );
+  sl.registerSingleton<VentaRepository>(VentaRepositoryImpl());
 
   sl.registerSingleton<GetEntradasEnVentaCasoDeUso>(
-      GetEntradasEnVentaCasoDeUso()
-  );
-
+      GetEntradasEnVentaCasoDeUso());
 
   //  ----------------- Compra  -----------------
-  sl.registerSingleton<CompraFirebaseService>(
-      CompraFirebaseServiceImpl()
-  );
+  sl.registerSingleton<CompraFirebaseService>(CompraFirebaseServiceImpl());
 
-  sl.registerSingleton<CompraRepository>(
-      CompraRepositoryImpl()
-  );
+  sl.registerSingleton<CompraRepository>(CompraRepositoryImpl());
 
-  sl.registerSingleton<CompraCasoDeUso>(
-      CompraCasoDeUso()
-  );
+  sl.registerSingleton<CompraCasoDeUso>(CompraCasoDeUso());
 
   // ----------------- Cancelar Compra -----------------
   sl.registerSingleton<CancelarCompraFirebaseService>(
-      CancelarCompraFirebaseServiceImpl()
-  );
+      CancelarCompraFirebaseServiceImpl());
 
   sl.registerSingleton<CancelarCompraRepository>(
-      CancelarCompraRepositoryImpl()
-  );
+      CancelarCompraRepositoryImpl());
 
-  sl.registerSingleton<CancelarCompraCasoDeUso>(
-      CancelarCompraCasoDeUso()
-  );
+  sl.registerSingleton<CancelarCompraCasoDeUso>(CancelarCompraCasoDeUso());
 
   // ----------------- Resumen de Compra -----------------
   sl.registerSingleton<GetEntradasCompradasCasoDeUso>(
-      GetEntradasCompradasCasoDeUso()
-  );
+      GetEntradasCompradasCasoDeUso());
 
   // ----------------- Crear Evento -----------------
-  sl.registerSingleton<ImgBBService>(
-      ImgBBService()
-  );
+  sl.registerSingleton<ImgBBService>(ImgBBService());
 
   sl.registerSingleton<CrearEventoFirebaseService>(
-      CrearEventoFirebaseServiceImpl()
-  );
+      CrearEventoFirebaseServiceImpl());
 
-  sl.registerSingleton<CrearEventoRepository>(
-      CrearEventoRepositoryImpl()
-  );
+  sl.registerSingleton<CrearEventoRepository>(CrearEventoRepositoryImpl());
 
-  sl.registerSingleton<CrearEventoCasoDeUso>(
-      CrearEventoCasoDeUso()
-  );
+  sl.registerSingleton<CrearEventoCasoDeUso>(CrearEventoCasoDeUso());
 
   // ----------------- Mis Eventos -----------------
   sl.registerSingleton<MisEventosFirebaseService>(
-      MisEventosFirebaseServiceImpl()
-  );
+      MisEventosFirebaseServiceImpl());
 
-  sl.registerSingleton<MisEventosRepository>(
-      MisEventosRepositoryImpl()
-  );
+  sl.registerSingleton<MisEventosRepository>(MisEventosRepositoryImpl());
 
-  sl.registerSingleton<GetMisEventosCasoDeUso>(
-      GetMisEventosCasoDeUso()
-  );
+  sl.registerSingleton<GetMisEventosCasoDeUso>(GetMisEventosCasoDeUso());
 
   // ----------------- Mis compras -----------------
 
   sl.registerSingleton<MisEntradasFirebaseService>(
-      MisEntradasFirebaseServiceImpl()
-  );
+      MisEntradasFirebaseServiceImpl());
 
-  sl.registerSingleton<MisEntradasRepository>(
-      MisEntradasRepositoryImpl()
-  );
+  sl.registerSingleton<MisEntradasRepository>(MisEntradasRepositoryImpl());
 
-  sl.registerSingleton<GetMisComprasCasoDeUso>(
-      GetMisComprasCasoDeUso()
-  );
+  sl.registerSingleton<GetMisComprasCasoDeUso>(GetMisComprasCasoDeUso());
 
   // ----------------- Cuenta -----------------
-  sl.registerSingleton<CuentaFirebaseService>(
-      CuentaFirebaseServiceImpl()
-  );
+  sl.registerSingleton<CuentaFirebaseService>(CuentaFirebaseServiceImpl());
 
-  sl.registerSingleton<CuentaRepository>(
-      CuentaRepositoryImpl()
-  );
+  sl.registerSingleton<CuentaRepository>(CuentaRepositoryImpl());
 
-  sl.registerSingleton<GetCuentaCasoDeUso>(
-      GetCuentaCasoDeUso()
-  );
+  sl.registerSingleton<GetCuentaCasoDeUso>(GetCuentaCasoDeUso());
 
-  sl.registerSingleton<SetImagenCasoDeUso>(
-      SetImagenCasoDeUso()
-  );
+  sl.registerSingleton<SetImagenCasoDeUso>(SetImagenCasoDeUso());
 
   // ----------------- Cerrar Sesion -----------------
   sl.registerSingleton<CerrarSesionFirebaseService>(
-      CerrarSesionFirebaseServiceImpl()
-  );
+      CerrarSesionFirebaseServiceImpl());
 
-  sl.registerSingleton<CerrarSesionRepository>(
-      CerrarSesionRepositoryImpl()
-  );
+  sl.registerSingleton<CerrarSesionRepository>(CerrarSesionRepositoryImpl());
 
-  sl.registerSingleton<CerrarSesionCasoDeUso>(
-      CerrarSesionCasoDeUso()
-  );
+  sl.registerSingleton<CerrarSesionCasoDeUso>(CerrarSesionCasoDeUso());
 
   // ----------------- ImagePicker -----------------
-  sl.registerSingleton<ImagePicker>(
-      ImagePicker()
-  );
+  sl.registerSingleton<ImagePicker>(ImagePicker());
 }

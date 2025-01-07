@@ -8,14 +8,14 @@ class AppTheme {
     brightness: Brightness.light,
     fontFamily: 'CircularStd',
     snackBarTheme: const SnackBarThemeData(
-      backgroundColor: AppColors.fondo, // Fondo para Snackbar
+      backgroundColor: AppColors.fondo,
       contentTextStyle: TextStyle(color: Colors.black),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.fondoSecundario, // Fondo del campo de entrada
+      fillColor: AppColors.fondoSecundario,
       hintStyle: const TextStyle(
-        color: AppColors.colorTextoTarjeta, // Color del texto de ayuda
+        color: AppColors.colorTextoTarjeta,
         fontWeight: FontWeight.w400,
       ),
       contentPadding: const EdgeInsets.all(16),
@@ -39,12 +39,12 @@ class AppTheme {
       ),
     ),
     cardTheme: CardTheme(
-      color: AppColors.fondo, // Fondo de las tarjetas
-      elevation: 1, // Sombra de las tarjetas
+      color: AppColors.fondo,
+      elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(
-          color: AppColors.fondoSecundario, // Borde de las tarjetas
+          color: AppColors.fondoSecundario,
           width: 1,
         ),
       ),

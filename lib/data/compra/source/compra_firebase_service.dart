@@ -5,40 +5,40 @@ import '../models/compra_model.dart';
 import '../models/entrada_comprada_model.dart';
 import '../models/peticion_compra_model.dart';
 
-abstract class CompraFirebaseService{
+abstract class CompraFirebaseService {
   Future<Either> comprar(PeticionCompraModel compra);
   Future<Either> getEntradasCompradas(String eventoId);
 }
 
-class CompraFirebaseServiceImpl extends CompraFirebaseService{
+class CompraFirebaseServiceImpl extends CompraFirebaseService {
   @override
-  Future<Either> comprar(PeticionCompraModel compra) async{
-    try{
+  Future<Either> comprar(PeticionCompraModel compra) async {
+    try {
       var usuarioFirebase = FirebaseAuth.instance.currentUser;
       await FirebaseFirestore.instance
           .collection('usuarios')
           .doc(usuarioFirebase!.uid)
           .collection(compra.eventoId)
           .add({
-            'eventoId': compra.eventoId,
-            'nombreEvento': compra.nombreEvento,
-            'cantidad': compra.cantidad,
-            'precioTotal': compra.precioTotal,
-            'entradas': compra.entradas.map((entrada) => entrada.toMap()).toList(),
-            'fechaDeCompra': FieldValue.serverTimestamp()
-          });
+        'eventoId': compra.eventoId,
+        'nombreEvento': compra.nombreEvento,
+        'cantidad': compra.cantidad,
+        'precioTotal': compra.precioTotal,
+        'entradas': compra.entradas.map((entrada) => entrada.toMap()).toList(),
+        'fechaDeCompra': FieldValue.serverTimestamp()
+      });
 
-      for (var entrada in compra.entradas){
+      for (var entrada in compra.entradas) {
         await FirebaseFirestore.instance
             .collection('eventos')
             .doc(compra.eventoId)
             .collection('entradas')
             .doc(entrada.numeroEntrada)
             .update({
-              'estado': 'vendida',
-              'comprador': usuarioFirebase.uid,
-              'fechaDeCompra': entrada.fechaCompra,
-            });
+          'estado': 'vendida',
+          'comprador': usuarioFirebase.uid,
+          'fechaDeCompra': entrada.fechaCompra,
+        });
       }
 
       var eventoRef = FirebaseFirestore.instance
@@ -48,7 +48,7 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
           .doc(compra.eventoId);
 
       var eventoDoc = await eventoRef.get();
-      if(!eventoDoc.exists){
+      if (!eventoDoc.exists) {
         await eventoRef.set({
           'id': compra.eventoId,
           'nombreEvento': compra.nombreEvento,
@@ -57,17 +57,16 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
         });
       }
 
-      return Right("Compra realizada con exito");
-    }
-    catch(e){
-      print(e.toString());
-      return Left("Ocurrió un problema inesperado, intentelo de nuevo más tarde");
+      return const Right("Compra realizada con exito");
+    } catch (e) {
+      return const Left(
+          "Ocurrió un problema inesperado, intentelo de nuevo más tarde");
     }
   }
 
   @override
   Future<Either> getEntradasCompradas(String eventoId) async {
-    try{
+    try {
       var usuarioFirebase = FirebaseAuth.instance.currentUser;
       var entradas = await FirebaseFirestore.instance
           .collection('usuarios')
@@ -79,26 +78,21 @@ class CompraFirebaseServiceImpl extends CompraFirebaseService{
 
       var datos = entradas.docs.map((element) {
         var data = element.data();
-        print("Datos del documento: $data");
 
         var entradasList = (data['entradas'] as List?)?.map((entrada) {
-          print("Entrada: $entrada");
-          return EntradaCompradaModel.fromMap(entrada as Map<String, dynamic>);
-        }).toList() ?? [];
-
-        print("Entradas mapeadas: $entradasList");
+              return EntradaCompradaModel.fromMap(
+                  entrada as Map<String, dynamic>);
+            }).toList() ??
+            [];
 
         var compraModel = CompraModel.fromMap(data, entradasList);
         return compraModel;
       }).toList();
 
-
       return Right(datos);
-    }
-    catch(e){
-      print("SERVICO LEFT");
-      print(e.toString());
-      return Left("Ocurrió un problema inesperado, intentelo de nuevo más tarde");
+    } catch (e) {
+      return const Left(
+          "Ocurrió un problema inesperado, intentelo de nuevo más tarde");
     }
   }
 }

@@ -11,52 +11,48 @@ import '../widgets/mi_evento_card.dart';
 import '../widgets/sin_eventos_card.dart';
 
 class MisEventosPage extends StatelessWidget {
-
-  const MisEventosPage({super.key,});
+  const MisEventosPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Mis eventos'),
+        appBar: AppBar(
+          title: const Center(
+            child: Text('Mis eventos'),
+          ),
+          backgroundColor: AppColors.primario,
+          automaticallyImplyLeading: false,
         ),
-        backgroundColor: AppColors.primario,
-        automaticallyImplyLeading: false,
-      ),
-      body: BlocProvider(
-        create: (context) => MiEventoCubit()..mostrarCompras(),
-        child: BlocBuilder<MiEventoCubit, MiEventoState>(
-          builder: (context, state) {
-            if (state is MiEventoStateCargando) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is MiEventostateCargado) {
-              if(state.eventos.isNotEmpty){
-                return Column(
-                  children: [
-                    Expanded(child: _entradas(state.eventos)),
-                    const Gap(20), // Espacio entre la lista y el botón
-                  ],
-                );
+        body: BlocProvider(
+          create: (context) => MiEventoCubit()..mostrarCompras(),
+          child: BlocBuilder<MiEventoCubit, MiEventoState>(
+            builder: (context, state) {
+              if (state is MiEventoStateCargando) {
+                return const Center(child: CircularProgressIndicator());
               }
-              else{
-                print(AppUrl.imagenSinEventos);
-                return Center(
-                  child: SinEventosCard(
-                      imageUrl: AppUrl.imagenSinEventos,
-                      height: AppSizes.getMaxHeight(context)*0.7,
-                      width: AppSizes.getMaxWidth(context)*0.9
-                  ),
-                );
+              if (state is MiEventostateCargado) {
+                if (state.eventos.isNotEmpty) {
+                  return Column(
+                    children: [
+                      Expanded(child: _entradas(state.eventos)),
+                      const Gap(20),
+                    ],
+                  );
+                } else {
+                  return Center(
+                    child: SinEventosCard(
+                        imageUrl: AppUrl.imagenSinEventos,
+                        height: AppSizes.getMaxHeight(context) * 0.7,
+                        width: AppSizes.getMaxWidth(context) * 0.9),
+                  );
+                }
               }
-
-            }
-            return const Center(child: Text('No se encontraron entradas.'));
-          },
-        ),
-      )
-    );
+              return const Center(child: Text('No se encontraron entradas.'));
+            },
+          ),
+        ));
   }
 
   Widget _entradas(List<MiEventoEntity> eventos) {
@@ -64,7 +60,9 @@ class MisEventosPage extends StatelessWidget {
       itemCount: eventos.length,
       itemBuilder: (context, index) {
         final evento = eventos[index];
-        return MiEventoCard(evento: evento,);
+        return MiEventoCard(
+          evento: evento,
+        );
       },
     );
   }

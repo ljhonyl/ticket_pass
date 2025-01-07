@@ -1,6 +1,4 @@
 import 'package:ticket_pass/domain/compra/entity/entrada_comprada_entity.dart';
-import '../../../data/compra/models/compra_model.dart';
-import '../../../domain/compra/entity/peticion_compra_entity.dart';
 
 class CompraEntity {
   final String eventoId;

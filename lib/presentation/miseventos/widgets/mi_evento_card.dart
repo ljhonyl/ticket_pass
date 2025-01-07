@@ -5,7 +5,7 @@ import 'package:ticket_pass/domain/misventos/entity/mi_evento_entity.dart';
 import 'package:ticket_pass/presentation/misentradas/pages/mis_entradas_page.dart';
 
 class MiEventoCard extends StatelessWidget {
-  final MiEventoEntity evento; // Cambio de nombre a 'evento'
+  final MiEventoEntity evento;
 
   const MiEventoCard({
     required this.evento,
@@ -14,7 +14,7 @@ class MiEventoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String FechaEvento = DateFormat('dd-MM-yyyy HH:mm').format(
+    String fechaEvento = DateFormat('dd-MM-yyyy HH:mm').format(
       evento.fechaEvento.toDate(),
     );
 
@@ -31,7 +31,6 @@ class MiEventoCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Imagen del evento
               evento.imagen.isNotEmpty
                   ? Image.network(
                       evento.imagen,
@@ -56,7 +55,7 @@ class MiEventoCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Fecha del evento: $FechaEvento',
+                'Fecha del evento: $fechaEvento',
                 style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
             ],

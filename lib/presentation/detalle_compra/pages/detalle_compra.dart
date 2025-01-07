@@ -19,30 +19,36 @@ class DetalleCompra extends StatefulWidget {
   final List<EntradaEnVentaEntity> entradas;
   final num precioTotal;
 
-  DetalleCompra({required this.evento, required this.entradas, required this.precioTotal});
+  const DetalleCompra(
+      {super.key,
+      required this.evento,
+      required this.entradas,
+      required this.precioTotal});
 
   @override
   _DetalleCompraState createState() => _DetalleCompraState();
 }
 
-class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserver {
-  final CancelarCompraCasoDeUso cancelarCompraCasoDeUso = CancelarCompraCasoDeUso();
+class _DetalleCompraState extends State<DetalleCompra>
+    with WidgetsBindingObserver {
+  final CancelarCompraCasoDeUso cancelarCompraCasoDeUso =
+      CancelarCompraCasoDeUso();
   bool _cancelacionRealizada = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // Observamos cambios en el ciclo de vida
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); // Dejamos de observar
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   Future<void> cancelarCompra() async {
-    if (_cancelacionRealizada) return; // Evitamos múltiples ejecuciones
+    if (_cancelacionRealizada) return;
     setState(() {
       _cancelacionRealizada = true;
     });
@@ -54,24 +60,20 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
       );
     }).toList();
 
-    final result = await cancelarCompraCasoDeUso.call(params: entradas);
-    result.fold(
-          (l) => print("Error al cancelar la compra: $l"),
-          (r) => print("Compra cancelada y entradas liberadas"),
-    );
+    await cancelarCompraCasoDeUso.call(params: entradas);
   }
 
   Future<void> cancelarCompraYSalir() async {
-    await cancelarCompra(); // Cancela la compra
+    await cancelarCompra();
     if (mounted) {
-      Navigator.pop(context); // Redirige a la pantalla anterior
+      Navigator.pop(context);
     }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      cancelarCompraYSalir(); // Cancela y navega hacia atrás si la app se minimiza
+      cancelarCompraYSalir();
     }
     super.didChangeAppLifecycleState(state);
   }
@@ -114,17 +116,27 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Detalles del precio",),
+                      Text(
+                        "Detalles del precio",
+                      ),
                     ],
                   ),
-                  _filaText(label: "Nº de entradas:", dato: widget.entradas.length.toString()),
-                  _filaText(label: "Precio por entrada:", dato: "${widget.evento.precio.toStringAsFixed(2)}€"),
-                  _filaText(label: "Precio total:", dato: "${widget.precioTotal.toStringAsFixed(2)}€"),
+                  _filaText(
+                      label: "Nº de entradas:",
+                      dato: widget.entradas.length.toString()),
+                  _filaText(
+                      label: "Precio por entrada:",
+                      dato: "${widget.evento.precio.toStringAsFixed(2)}€"),
+                  _filaText(
+                      label: "Precio total:",
+                      dato: "${widget.precioTotal.toStringAsFixed(2)}€"),
                   const Gap(16),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Entradas",)
+                      Text(
+                        "Entradas",
+                      )
                     ],
                   ),
                   _entradas(),
@@ -140,8 +152,7 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
                 precioTotal: widget.precioTotal,
                 entradas: _convertirEntradas(widget.entradas),
                 fechaEvento: widget.evento.fecha,
-                imagen: widget.evento.imagenes[0]
-            ),
+                imagen: widget.evento.imagenes[0]),
           ),
         ),
       ),
@@ -156,7 +167,7 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Numero de entrada:"),
+                const Text("Numero de entrada:"),
                 Text(entrada.numeroEntrada),
               ],
             ),
@@ -166,7 +177,8 @@ class _DetalleCompraState extends State<DetalleCompra> with WidgetsBindingObserv
     );
   }
 
-  List<PeticionEntradaCompraEntity> _convertirEntradas(List<EntradaEnVentaEntity> entradas) {
+  List<PeticionEntradaCompraEntity> _convertirEntradas(
+      List<EntradaEnVentaEntity> entradas) {
     Timestamp fechaCompra = Timestamp.now();
     return entradas.map((entrada) {
       return PeticionEntradaCompraEntity(

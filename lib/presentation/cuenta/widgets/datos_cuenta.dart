@@ -14,7 +14,7 @@ class DatosCuenta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var imagen = '';
-    if (!cuenta.imagen.isEmpty) {
+    if (cuenta.imagen.isNotEmpty) {
       imagen = cuenta.imagen;
     } else {
       imagen = GetUrlImagen.getImagenUsuarioUrl();
@@ -31,16 +31,14 @@ class DatosCuenta extends StatelessWidget {
                 );
 
                 if (nuevaImagen != null) {
-                  final result = await context.read<ImagenCubit>().setImagen(nuevaImagen);
+                  final result =
+                      await context.read<ImagenCubit>().setImagen(nuevaImagen);
 
-                  result.fold(
-                    (error){
-                      mostrarSnackbar(context, error.toString());
-                    },
-                    (success) {
-                      mostrarSnackbar(context, success.toString());
-                      }
-                  );
+                  result.fold((error) {
+                    mostrarSnackbar(context, error.toString());
+                  }, (success) {
+                    mostrarSnackbar(context, success.toString());
+                  });
                 }
               },
               child: CircleAvatar(
@@ -56,11 +54,11 @@ class DatosCuenta extends StatelessWidget {
           children: [
             Text(
               '${cuenta.nombre} ${cuenta.apellidos}',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               cuenta.email,
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
           ],
         ),
@@ -75,5 +73,4 @@ class DatosCuenta extends StatelessWidget {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
-
 }

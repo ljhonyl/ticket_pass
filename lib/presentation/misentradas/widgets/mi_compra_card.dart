@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';// Asegúrate de importar la entidad adecuada
+import 'package:intl/intl.dart';
 import '../../../domain/misentradas/entity/mi_compra_entity.dart';
-import 'mi_entrada_card.dart';  // Asegúrate de importar MiEntradaCard
+import 'mi_entrada_card.dart';
 
 class MiCompraCard extends StatelessWidget {
   final MiCompraEntity compra;
@@ -15,10 +15,10 @@ class MiCompraCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Convertir Timestamp a DateTime y formatear la fecha
     String formattedDateCompra = DateFormat('dd-MM-yyyy  HH-mm').format(
-        compra.entradas.isNotEmpty ? compra.entradas[0].fechaCompra.toDate() : DateTime.now()
-    );
+        compra.entradas.isNotEmpty
+            ? compra.entradas[0].fechaCompra.toDate()
+            : DateTime.now());
 
     return Card(
       elevation: 4,
@@ -37,7 +37,7 @@ class MiCompraCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Fecha de compra: $formattedDateCompra',  // Formatear la fecha
+              'Fecha de compra: $formattedDateCompra',
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 8),
@@ -54,9 +54,9 @@ class MiCompraCard extends StatelessWidget {
             Column(
               children: compra.entradas
                   .map((entrada) => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: MiEntradaCard(entrada: entrada, imagen: imagen),
-              ))
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: MiEntradaCard(entrada: entrada, imagen: imagen),
+                      ))
                   .toList(),
             ),
           ],

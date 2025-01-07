@@ -21,7 +21,9 @@ class Proximamente extends StatelessWidget {
         SizedBox(
           height: 210,
           child: BlocProvider(
-            create: (context) => EventoCubit(casoDeUso: sl<GetProximamenteCasoDeUso>())..mostrarEntradas(),
+            create: (context) =>
+                EventoCubit(casoDeUso: sl<GetProximamenteCasoDeUso>())
+                  ..mostrarEntradas(),
             child: BlocBuilder<EventoCubit, EventoState>(
               builder: (context, state) {
                 if (state is EventoStateCargando) {
@@ -32,7 +34,7 @@ class Proximamente extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _proximamenteList(state.entradas, context),
+                      _proximamenteList(state.eventos, context),
                     ],
                   );
                 }
@@ -47,7 +49,7 @@ class Proximamente extends StatelessWidget {
 
   Widget _proximamenteText() {
     return const Align(
-      alignment: Alignment.centerLeft, // Asegura que esté alineado a la izquierda.
+      alignment: Alignment.centerLeft,
       child: Text(
         'Proximamente',
         style: TextStyle(
@@ -58,7 +60,8 @@ class Proximamente extends StatelessWidget {
     );
   }
 
-  Widget _proximamenteList(List<EventoEntity> proximamente, BuildContext context) {
+  Widget _proximamenteList(
+      List<EventoEntity> proximamente, BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.8;
 

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 class Password extends StatelessWidget {
   final TextEditingController controller;
-  const Password({
-    required this.controller,
-    super.key
-  });
+  const Password({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +10,7 @@ class Password extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
-        obscureText: true, // Oculta el texto
+        obscureText: true,
         decoration: const InputDecoration(
           labelText: "Contraseña",
           hintText: "Ingresa tu contraseña",

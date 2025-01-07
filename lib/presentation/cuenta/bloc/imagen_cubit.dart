@@ -4,11 +4,11 @@ import 'package:ticket_pass/domain/cuenta/usescases/set_imagen_caso_de_uso.dart'
 
 import '../../../service_locator.dart';
 
-class ImagenCubit extends Cubit<String>{
+class ImagenCubit extends Cubit<String> {
   ImagenCubit({required String imagen}) : super(imagen);
 
-  Future<Either> setImagen(dynamic nuevaImagen) async{
-    try{
+  Future<Either> setImagen(dynamic nuevaImagen) async {
+    try {
       var respuesta = await sl<SetImagenCasoDeUso>().call(params: nuevaImagen);
 
       return respuesta.fold(
@@ -17,13 +17,12 @@ class ImagenCubit extends Cubit<String>{
         },
         (data) {
           emit(data);
-          return Right("Imagen actualizada correctamente");
+          return const Right("Imagen actualizada correctamente");
         },
       );
-    }
-    catch(e){
+    } catch (e) {
       emit(state);
-      return Left("Ocurrio un error durante el proceso");
+      return const Left("Ocurrio un error durante el proceso");
     }
   }
 }

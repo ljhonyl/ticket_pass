@@ -19,7 +19,7 @@ class TotalEntradas extends StatelessWidget {
         decoration: InputDecoration(
           labelText: "Total entradas a la venta",
           hintText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         validator: (value) {
           var msg = 'Por favor ingresa un numero válido';

@@ -47,6 +47,7 @@ dependencies:
   get: ^4.6.6
   fluentui_icons: ^1.0.0
   diacritic: ^0.1.6
+  flutter_stripe: ^11.3.0
 
 dev_dependencies:
   flutter_test:

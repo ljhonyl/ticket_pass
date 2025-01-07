@@ -30,7 +30,7 @@ class RestablecerPassword extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) => BotonStateCubit(),
-        child:  BlocListener<BotonStateCubit,BotonState>(
+        child: BlocListener<BotonStateCubit, BotonState>(
           listener: (context, state) {
             if (state is BotonErrorState) {
               var snackbar = SnackBar(
@@ -39,8 +39,8 @@ class RestablecerPassword extends StatelessWidget {
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
-            if(state is BotonHechoState){
-              var snackbar = SnackBar(
+            if (state is BotonHechoState) {
+              var snackbar = const SnackBar(
                 content: Text("Email enviado"),
                 behavior: SnackBarBehavior.floating,
               );
@@ -52,14 +52,21 @@ class RestablecerPassword extends StatelessWidget {
           },
           child: Center(
             child: Padding(
-              padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
+              padding: EdgeInsets.all(AppSizes.getMaxWidth(context) * 0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Recuperacion", style: AppStyles.h2,),
-                  Gap(20),
-                  EntradaTexto(controller: _emailCon, label: "Email", tipoDetexto: TextInputType.emailAddress,),
-                  Gap(20),
+                  Text(
+                    "Recuperacion",
+                    style: AppStyles.h2,
+                  ),
+                  const Gap(20),
+                  EntradaTexto(
+                    controller: _emailCon,
+                    label: "Email",
+                    tipoDetexto: TextInputType.emailAddress,
+                  ),
+                  const Gap(20),
                   _restablecerPasswordButton(),
                 ],
               ),
@@ -70,30 +77,19 @@ class RestablecerPassword extends StatelessWidget {
     );
   }
 
-  Widget _tituloText() {
-    return const Text(
-      'Solicitar Email',
-      style: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.bold
-      ),
-    );
+  Widget _restablecerPasswordButton() {
+    return Builder(builder: (context) {
+      return BotonDeCarga(
+        onPressed: () {
+          context.read<BotonStateCubit>().finalizar(
+              casoDeUso: RestablecerPasswordCasoDeUso(),
+              params: _emailCon.text);
+        },
+        contenido: Text(
+          "Solicitar recuperación",
+          style: AppStyles.textoBotonesPrimarios,
+        ),
+      );
+    });
   }
-
-  Widget _restablecerPasswordButton(){
-    return Builder(
-        builder: (context){
-          return BotonDeCarga(
-              onPressed: (){
-                context.read<BotonStateCubit>().finalizar(
-                    casoDeUso: RestablecerPasswordCasoDeUso(),
-                    params: _emailCon.text
-                );
-              },
-            contenido: Text("Solicitar recuperación", style: AppStyles.textoBotonesPrimarios,),
-          );
-        }
-    );
-  }
-
 }

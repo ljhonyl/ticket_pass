@@ -6,23 +6,19 @@ import 'package:ticket_pass/domain/misentradas/repository/mis_entradas_repositor
 
 import '../../../service_locator.dart';
 
-class MisEntradasRepositoryImpl extends MisEntradasRepository{
+class MisEntradasRepositoryImpl extends MisEntradasRepository {
   @override
   Future<Either> getEntradas(String eventoId) async {
     var compras = await sl<MisEntradasFirebaseService>().getEntradas(eventoId);
 
-    return compras.fold(
-            (error){
-          print("REPOSITORIO MIS ENTRADAS");
-          return Left(error);
-        },
-            (data){
-          List<MiCompraEntity> datos = (data as List<MiCompraModel>)
-              .map((compra) => compra.toEntity())
-              .toList();
+    return compras.fold((error) {
+      return Left(error);
+    }, (data) {
+      List<MiCompraEntity> datos = (data as List<MiCompraModel>)
+          .map((compra) => compra.toEntity())
+          .toList();
 
-          return Right(datos);
-        }
-    );
+      return Right(datos);
+    });
   }
 }

@@ -30,7 +30,7 @@ class CategoriaSelect extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         items: categorias.map((categoria) {
           return DropdownMenuItem<CategoriaEntity>(

@@ -8,23 +8,20 @@ import 'package:ticket_pass/data/cuenta/service/cuenta_firebase_service.dart';
 import '../../../domain/cuenta/repository/cuenta_repository.dart';
 import '../../../service_locator.dart';
 
-class CuentaRepositoryImpl extends CuentaRepository{
+class CuentaRepositoryImpl extends CuentaRepository {
   @override
   Future<Either> getCuenta() async {
     var cuenta = await sl<CuentaFirebaseService>().getCuenta();
 
-    return cuenta.fold(
-      (error){
-        return Left(error);
-      },
-      (data){
-        if(data is CuentaModel){
-          var datos = data.toEntity();
-          return Right(datos);
-        }
-        return Left("Erro al tratar la cuenta");
+    return cuenta.fold((error) {
+      return Left(error);
+    }, (data) {
+      if (data is CuentaModel) {
+        var datos = data.toEntity();
+        return Right(datos);
       }
-    );
+      return const Left("Erro al tratar la cuenta");
+    });
   }
 
   @override
@@ -36,19 +33,18 @@ class CuentaRepositoryImpl extends CuentaRepository{
       } else if (imagen is File) {
         imagenFile = imagen;
       } else {
-        return Left('Tipo de imagen no soportado');
+        return const Left('Tipo de imagen no soportado');
       }
       String imagenUrl = await sl<ImgBBService>().subirImagen(imagenFile);
 
-      var respuesta= await sl<CuentaFirebaseService>().setImagen(imagenUrl);
+      var respuesta = await sl<CuentaFirebaseService>().setImagen(imagenUrl);
 
       return respuesta.fold(
         (error) => Left(error),
         (data) => Right(imagenUrl),
       );
-    }
-    catch(e) {
-      return Left('Error al subir la imagen');
+    } catch (e) {
+      return const Left('Error al subir la imagen');
     }
   }
 }

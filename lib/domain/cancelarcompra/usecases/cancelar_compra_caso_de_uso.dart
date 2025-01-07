@@ -5,11 +5,10 @@ import 'package:ticket_pass/domain/caso_de_uso.dart';
 
 import '../../../service_locator.dart';
 
-
-class CancelarCompraCasoDeUso implements CasoDeUso<Either, List<EntradaCanceladaEntity>> {
+class CancelarCompraCasoDeUso
+    implements CasoDeUso<Either, List<EntradaCanceladaEntity>> {
   @override
-  Future<Either> call({List<EntradaCanceladaEntity> ? params}) async{
-    print("ESTAMOS EN LA IMPLEMENTACION DEL REPOSITORIO");
+  Future<Either> call({List<EntradaCanceladaEntity>? params}) async {
     return await sl<CancelarCompraRepository>().cancelarCompra(params!);
   }
 }

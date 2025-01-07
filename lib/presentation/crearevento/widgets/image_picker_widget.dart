@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../core/configs/theme/app_colors.dart';
 import '../../styles/app_styles.dart';
 
 class ImagePickerWidget extends StatefulWidget {
@@ -24,17 +23,20 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImages() async {
-    final List<XFile>? pickedImages = await _picker.pickMultiImage();
+    final List<XFile> pickedImages = await _picker.pickMultiImage();
 
-    if (pickedImages != null && pickedImages.length > 0) {
-      // Agregar las imágenes seleccionadas a la lista sin reemplazar las existentes
+    if (pickedImages.isNotEmpty) {
       final List<XFile> updatedImages = List.from(widget.images!);
-      updatedImages.addAll(pickedImages.where((img) => !updatedImages.contains(img)));
+      updatedImages
+          .addAll(pickedImages.where((img) => !updatedImages.contains(img)));
 
       if (updatedImages.length <= 5) {
         widget.onImagesChanged(updatedImages);
       } else {
-        var snackbar = SnackBar(content: Text("Puedes seleccionar hasta 5 imagenes"), behavior: SnackBarBehavior.floating, );
+        var snackbar = const SnackBar(
+          content: Text("Puedes seleccionar hasta 5 imagenes"),
+          behavior: SnackBarBehavior.floating,
+        );
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }
     }
@@ -47,7 +49,10 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       children: [
         ElevatedButton(
           onPressed: _pickImages,
-          child: Text('Seleccionar Imágenes', style: AppStyles.textoBotonesPrimarios.copyWith(fontSize: 14),),
+          child: Text(
+            'Seleccionar Imágenes',
+            style: AppStyles.textoBotonesPrimarios.copyWith(fontSize: 14),
+          ),
         ),
         const SizedBox(height: 10),
         Wrap(
@@ -84,4 +89,3 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     );
   }
 }
-

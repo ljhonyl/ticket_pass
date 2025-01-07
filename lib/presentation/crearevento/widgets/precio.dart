@@ -19,7 +19,7 @@ class Precio extends StatelessWidget {
         decoration: InputDecoration(
           labelText: "Precio",
           hintText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         validator: (value) {
           var msg = 'Por favor ingresa un numero válido';

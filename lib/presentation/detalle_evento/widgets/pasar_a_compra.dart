@@ -24,23 +24,24 @@ class PasarACompra extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SeleccionarCantidadCubit, int>(
       builder: (context, cantidadSeleccionada) {
-        // Calcula el precio total basado en el estado actual
         final precioTotal = entrada.precio * cantidadSeleccionada;
 
         return BlocListener<BotonStateCubit, BotonState>(
-          listener: (context, state){
-            if(state is BotonHechoState){
+          listener: (context, state) {
+            if (state is BotonHechoState) {
               AppNavegacion.push(
                 context,
                 DetalleCompra(
                     evento: entrada,
                     entradas: state.params,
-                    precioTotal: precioTotal
-                ),
+                    precioTotal: precioTotal),
               );
             }
-            if(state is BotonErrorState){
-              var snackbar = SnackBar(content: Text(state.msgError), behavior: SnackBarBehavior.floating, );
+            if (state is BotonErrorState) {
+              var snackbar = SnackBar(
+                content: Text(state.msgError),
+                behavior: SnackBarBehavior.floating,
+              );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
           },
@@ -50,11 +51,8 @@ class PasarACompra extends StatelessWidget {
               onPressed: () {
                 context.read<BotonStateCubit>().finalizar(
                     casoDeUso: GetEntradasEnVentaCasoDeUso(),
-                    params: EntradaRequeridaModel(
-                        entrada.id,
-                        context.read<SeleccionarCantidadCubit>().state
-                    )
-                );
+                    params: EntradaRequeridaModel(entrada.id,
+                        context.read<SeleccionarCantidadCubit>().state));
               },
               contenido: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +61,7 @@ class PasarACompra extends StatelessWidget {
                     '${precioTotal.toStringAsFixed(2)}€',
                     style: AppStyles.textoBotonesPrimarios,
                   ),
-                   Text(
+                  Text(
                     'Procesar Compra',
                     style: AppStyles.textoBotonesPrimarios,
                   ),

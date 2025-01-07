@@ -7,9 +7,9 @@ class EventoStateEstadoInicial extends EventoState{}
 class EventoStateCargando extends EventoState{}
 
 class EventoStateCargado extends EventoState{
-  final List<EventoEntity> entradas;
+  final List<EventoEntity> eventos;
 
-  EventoStateCargado({required this.entradas});
+  EventoStateCargado({required this.eventos});
 }
 
 class EventoStateError extends EventoState{}

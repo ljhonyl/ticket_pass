@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../core/configs/theme/app_colors.dart';
-import '../../../domain/misentradas/entity/mi_entrada_entity.dart'; // Asegúrate de importar la entidad correcta
+import '../../../domain/misentradas/entity/mi_entrada_entity.dart';
 
 class MiEntradaCard extends StatelessWidget {
   final MiEntradaEntity entrada;
@@ -16,10 +15,8 @@ class MiEntradaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Convertir Timestamp a DateTime
     DateTime fechaCompra = entrada.fechaCompra.toDate();
 
-    // Formatear la fecha solo a 'dd-MM-yyyy'
     String formattedDate = DateFormat('dd-MM-yyyy').format(fechaCompra);
 
     return Container(

@@ -6,11 +6,11 @@ class SinEventosCard extends StatelessWidget {
   final double width;
 
   const SinEventosCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.height,
     required this.width,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

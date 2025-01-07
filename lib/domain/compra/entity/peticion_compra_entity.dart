@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../data/compra/models/peticion_compra_model.dart';
@@ -28,13 +26,12 @@ class PeticionCompraEntity {
 extension PeticionCompraXEntity on PeticionCompraEntity {
   PeticionCompraModel toModel() {
     return PeticionCompraModel(
-      eventoId: eventoId,
-      nombreEvento: nombreEvento,
-      cantidad: cantidad,
-      precioTotal: precioTotal,
-      entradas: entradas.map((entrada) => entrada.toModel()).toList(),
-      fechaEvento: fechaEvento,
-      imagen: imagen
-    );
+        eventoId: eventoId,
+        nombreEvento: nombreEvento,
+        cantidad: cantidad,
+        precioTotal: precioTotal,
+        entradas: entradas.map((entrada) => entrada.toModel()).toList(),
+        fechaEvento: fechaEvento,
+        imagen: imagen);
   }
 }

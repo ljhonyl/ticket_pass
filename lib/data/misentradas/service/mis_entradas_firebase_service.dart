@@ -5,15 +5,15 @@ import 'package:ticket_pass/data/misentradas/models/mi_compra_model.dart';
 
 import '../models/mi_entrada_model.dart';
 
-abstract class MisEntradasFirebaseService{
+abstract class MisEntradasFirebaseService {
   Future<Either> getEntradas(String eventoId);
 }
 
-class MisEntradasFirebaseServiceImpl extends MisEntradasFirebaseService{
+class MisEntradasFirebaseServiceImpl extends MisEntradasFirebaseService {
   @override
   Future<Either> getEntradas(String eventoId) async {
-    try{
-      var usuarioFirebase = await FirebaseAuth.instance.currentUser;
+    try {
+      var usuarioFirebase = FirebaseAuth.instance.currentUser;
       var comprasDocs = await FirebaseFirestore.instance
           .collection("usuarios")
           .doc(usuarioFirebase!.uid)
@@ -29,11 +29,8 @@ class MisEntradasFirebaseServiceImpl extends MisEntradasFirebaseService{
       }).toList();
 
       return right(compras);
-    }
-    catch(e) {
-      print("LEFT SERVICIO0");
+    } catch (e) {
       return left("Ocurrió un error inesperado, inténtelo de nuevo más tarde");
     }
   }
-
 }

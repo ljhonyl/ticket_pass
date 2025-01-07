@@ -19,7 +19,8 @@ class TodosEventos extends StatelessWidget {
         _entradasText(),
         const Gap(10),
         BlocProvider(
-          create: (context) => EventoCubit(casoDeUso: sl<GetEventoCasoDeUso>())..mostrarEntradas(),
+          create: (context) => EventoCubit(casoDeUso: sl<GetEventoCasoDeUso>())
+            ..mostrarEntradas(),
           child: BlocBuilder<EventoCubit, EventoState>(
             builder: (context, state) {
               if (state is EventoStateCargando) {
@@ -29,9 +30,7 @@ class TodosEventos extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _entradasList(context, state.entradas)
-                  ],
+                  children: [_entradasList(context, state.eventos)],
                 );
               }
               return Container();
@@ -44,30 +43,27 @@ class TodosEventos extends StatelessWidget {
 
   Widget _entradasText() {
     return const Align(
-      alignment: Alignment.centerLeft, // Alineado a la izquierda sin padding adicional
+      alignment: Alignment.centerLeft,
       child: Text(
         'Entradas',
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16
-        ),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
   }
 
   Widget _entradasList(BuildContext context, List<EventoEntity> entradas) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.5; // Ancho de las tarjetas ajustado al tamaño de pantalla
+    final cardWidth = screenWidth * 0.5;
 
     return SizedBox(
-      height: 310, // La altura específica de la lista.
+      height: 310,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return EventoCard(
             evento: entradas[index],
             width: cardWidth,
-            imageHeight: 200, // Altura de la imagen
+            imageHeight: 200,
           );
         },
         separatorBuilder: (context, index) => const SizedBox(width: 10),

@@ -25,7 +25,7 @@ class DetalleEntrada extends StatelessWidget {
       ],
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0), // Padding general
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,9 +34,9 @@ class DetalleEntrada extends StatelessWidget {
                 ListaImagenes(imagenes: entrada.imagenes),
                 const Gap(20),
                 _nombreUbicacionDescripcionText(),
-                Gap(20),
+                const Gap(20),
                 SeleccionarCantidad(entradaEntity: entrada),
-                Gap(20),
+                const Gap(20),
               ],
             ),
           ),

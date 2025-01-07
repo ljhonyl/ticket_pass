@@ -64,10 +64,11 @@ class Categorias extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.2), // Color de fondo de la burbuja
-                    borderRadius: BorderRadius.circular(20), // Borde redondeado
+                    color: Colors.blueAccent.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     categorias[index].nombre,

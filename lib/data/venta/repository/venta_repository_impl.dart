@@ -8,23 +8,22 @@ import '../../../service_locator.dart';
 class VentaRepositoryImpl extends VentaRepository {
   @override
   Future<Either> getEntradasEnVenta(EntradaRequeridaModel entradas) async {
-    print("Estamos en la implementacion del repositorio");
-    var entradasDisponibles = await sl<VentaFirebaseService>().getEntradasEnVenta(entradas);
+    var entradasDisponibles =
+        await sl<VentaFirebaseService>().getEntradasEnVenta(entradas);
 
     return entradasDisponibles.fold(
-          (error) {
+      (error) {
         return Left(error);
       },
-          (data) {
-        // Verificar que el número de entradas devueltas sea igual al solicitado
+      (data) {
         if (data.length < entradas.numeroEntradas) {
-          return Left("No hay suficientes entradas disponibles.");
+          return const Left("No hay suficientes entradas disponibles.");
         }
 
-        // Si hay suficientes entradas, mapearlas y retornarlas
         return Right(
           List.from(data)
-              .map((toElement) => EntradaEnVentaModel.fromMap(toElement).toEntity())
+              .map((toElement) =>
+                  EntradaEnVentaModel.fromMap(toElement).toEntity())
               .toList(),
         );
       },

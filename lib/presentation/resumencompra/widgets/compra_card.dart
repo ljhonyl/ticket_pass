@@ -40,7 +40,7 @@ class CompraCard extends StatelessWidget {
                 style: AppStyles.cuerpo,
                 children: <TextSpan>[
                   TextSpan(
-                    text: '$fecha',
+                    text: fecha,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -54,7 +54,8 @@ class CompraCard extends StatelessWidget {
                 children: <TextSpan>[
                   TextSpan(
                     text: '${compra.cantidad}',
-                    style: AppStyles.cuerpo.copyWith(fontWeight: FontWeight.bold),
+                    style:
+                        AppStyles.cuerpo.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

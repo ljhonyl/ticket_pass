@@ -18,7 +18,7 @@ class EventoCubit extends Cubit<EventoState>{
           emit(EventoStateError());
         },
         (data){
-          emit(EventoStateCargado(entradas: data));
+          emit(EventoStateCargado(eventos: data));
         }
     );
   }

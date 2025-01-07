@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../core/configs/theme/app_colors.dart';
 import '../../../domain/compra/entity/entrada_comprada_entity.dart';
@@ -8,18 +7,12 @@ import '../../../domain/compra/entity/entrada_comprada_entity.dart';
 class EntradaCard extends StatelessWidget {
   final EntradaCompradaEntity entrada;
   final String imagen;
-  const EntradaCard({
-    required this.entrada,
-    required this.imagen,
-    super.key
-  });
+  const EntradaCard({required this.entrada, required this.imagen, super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Convertir Timestamp a DateTime
-    DateTime fechaCompra = (entrada.fechaCompra as Timestamp).toDate();
+    DateTime fechaCompra = (entrada.fechaCompra).toDate();
 
-    // Formatear la fecha solo a 'dd-MM-yyyy'
     String formattedDate = DateFormat('dd-MM-yyyy').format(fechaCompra);
 
     return Container(
@@ -27,8 +20,7 @@ class EntradaCard extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           color: AppColors.fondoSecundario,
-          borderRadius: BorderRadius.circular(8)
-      ),
+          borderRadius: BorderRadius.circular(8)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,16 +37,13 @@ class EntradaCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: NetworkImage(
-                                imagen
-                            )
-                        ),
-                        borderRadius: BorderRadius.circular(4)
-                    ),
+                            fit: BoxFit.fill, image: NetworkImage(imagen)),
+                        borderRadius: BorderRadius.circular(4)),
                   ),
                 ),
-                const SizedBox(width: 10, ),
+                const SizedBox(
+                  width: 10,
+                ),
                 Expanded(
                   flex: 6,
                   child: Column(
@@ -65,9 +54,7 @@ class EntradaCard extends StatelessWidget {
                         entrada.numeroEntrada,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16
-                        ),
+                            fontWeight: FontWeight.w500, fontSize: 16),
                       ),
                       Row(
                         children: [
@@ -78,20 +65,16 @@ class EntradaCard extends StatelessWidget {
                                   style: const TextStyle(
                                       color: AppColors.colorTextoTarjeta,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 10
-                                  ),
+                                      fontSize: 10),
                                   children: [
                                     TextSpan(
                                       text: formattedDate,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 10
-                                      ),
+                                          fontSize: 10),
                                     )
-                                  ]
-                              )
-                          )
+                                  ]))
                         ],
                       )
                     ],

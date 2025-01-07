@@ -12,6 +12,7 @@ class EventoModel {
   final String descripcion;
   final String ubicacion;
   final num precio;
+  final String nombreNormalizado;
 
   EventoModel({
     required this.categoriaId,
@@ -22,6 +23,7 @@ class EventoModel {
     required this.descripcion,
     required this.ubicacion,
     required this.precio,
+    required this.nombreNormalizado
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +49,7 @@ class EventoModel {
       descripcion: map['descripcion'] as String,
       ubicacion: map['ubicacion'] as String,
       precio: map['precio'] as num,
+      nombreNormalizado: map['nombreNormalizado'] as String,
     );
   }
 

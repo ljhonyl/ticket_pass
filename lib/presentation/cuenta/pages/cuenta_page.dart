@@ -1,3 +1,4 @@
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -78,7 +79,7 @@ class CuentaPage extends StatelessWidget {
             const Gap(20),
             const Text('Mis Tickets', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             const Gap(8),
-            _card(icono: Icons.airplane_ticket, texto: 'Ver mis tickets', onTap: () {
+            _card(icono: FluentSystemIcons.ic_fluent_ticket_regular, texto: 'Ver mis tickets', onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const MisEventosPage()),

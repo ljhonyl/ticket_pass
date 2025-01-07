@@ -17,13 +17,11 @@ class Fecha extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           labelText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         onTap: () async {
-          // Ocultar el teclado cuando el usuario toque el campo de fecha y hora
           FocusScope.of(context).requestFocus(FocusNode());
 
-          // Fecha
           DateTime? pickedDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
@@ -31,7 +29,6 @@ class Fecha extends StatelessWidget {
             lastDate: DateTime(2101),
           );
 
-          //Cuando se ha seleccionado una fecha permitimos seleccionar una hora
           if (pickedDate != null) {
             TimeOfDay? pickedTime = await showTimePicker(
               context: context,
@@ -47,8 +44,8 @@ class Fecha extends StatelessWidget {
                 pickedTime.minute,
               );
 
-              // Formatear la fecha y hora seleccionadas en el formato adecuado
-              controller.text = '${finalDateTime.toLocal()}'.split(' ')[0] + ' ${pickedTime.format(context)}';
+              controller.text =
+                  '${'${finalDateTime.toLocal()}'.split(' ')[0]} ${pickedTime.format(context)}';
             }
           }
         },
