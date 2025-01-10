@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 
@@ -17,7 +18,7 @@ class SeleccionarCantidad extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      padding: const EdgeInsets.only(left: 12),
+      padding: EdgeInsets.only(left: AppSizes.getMaxWidth(context)*0.03),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         color: AppColors.fondoSecundario

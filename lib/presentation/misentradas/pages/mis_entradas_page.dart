@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/misentradas/entity/mi_compra_entity.dart';
 import 'package:ticket_pass/presentation/menuinferior/pages/menu_inferior.dart';
@@ -47,7 +48,7 @@ class MisEntradasPage extends StatelessWidget {
         }),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(AppSizes.getMaxHeight(context)*0.01),
         child: BotonSimple(
           onPressed: () {
             AppNavegacion.pushReplacement(context, const MenuInferior());

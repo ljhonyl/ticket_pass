@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_pass/common/bloc/evento/evento_cubit.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/presentation/busqueda/bloc/buscador_cubit.dart';
 
 class Buscador extends StatelessWidget {
@@ -21,7 +22,7 @@ class Buscador extends StatelessWidget {
               }
             },
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(12),
+              contentPadding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.03),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
               ),

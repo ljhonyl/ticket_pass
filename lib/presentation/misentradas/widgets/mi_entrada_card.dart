@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/presentation/codigoqr/codigo_qr_page.dart';
 import '../../../domain/misentradas/entity/mi_entrada_entity.dart';
@@ -26,7 +27,7 @@ class MiEntradaCard extends StatelessWidget {
       },
       child: Container(
         height: 100,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.02),
         decoration: BoxDecoration(
           color: AppColors.fondoSecundario,
           borderRadius: BorderRadius.circular(8),

@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 
-class Precio extends StatelessWidget {
+class Descripcion extends StatelessWidget {
   final TextEditingController controller;
+  final String label;
   final String hintText;
-  const Precio({
+  final TextInputType tipoDetexto;
+
+  const Descripcion({
     super.key,
     required this.controller,
-    this.hintText = "55.55",
+    required this.label,
+    this.hintText = "",
+    this.tipoDetexto = TextInputType.text,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: AppSizes.getMaxHeight(context)*0.01),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
-        keyboardType: TextInputType.number,
+        keyboardType: tipoDetexto,
+        maxLines: 5,
+        minLines: 1,
         decoration: InputDecoration(
-          labelText: "Precio",
+          labelText: label,
           hintText: hintText,
           border: const OutlineInputBorder(),
         ),
         validator: (value) {
-          var msg = 'Por favor ingresa un numero válido';
           if (value == null || value.isEmpty) {
-            return msg;
-          }
-          final number = double.tryParse(value);
-          if (number == null || number <= 0) {
-            return msg;
+            return 'Por favor ingresa un valor valido para : $label';
           }
           return null;
         },

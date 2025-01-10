@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/tarjetas/evento_card.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/domain/compra/entity/peticion_compra_entity.dart';
 import 'package:ticket_pass/domain/compra/entity/peticion_entrada_compra_entity.dart';
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
@@ -101,7 +102,7 @@ class _DetalleCompraState extends State<DetalleCompra>
           ),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

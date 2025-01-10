@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_simple.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/compra/entity/compra_entity.dart';
 import 'package:ticket_pass/presentation/menuinferior/pages/menu_inferior.dart';
@@ -46,7 +47,7 @@ class ResumenCompra extends StatelessWidget {
         }),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.02),
         child: BotonSimple(
           onPressed: () {
             AppNavegacion.pushReplacement(context, const MenuInferior());

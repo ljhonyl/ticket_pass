@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 
 import '../../../core/configs/theme/app_colors.dart';
 import '../../../domain/compra/entity/entrada_comprada_entity.dart';
@@ -17,7 +18,7 @@ class EntradaCard extends StatelessWidget {
 
     return Container(
       height: 100,
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
       decoration: BoxDecoration(
           color: AppColors.fondoSecundario,
           borderRadius: BorderRadius.circular(8)),

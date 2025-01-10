@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/domain/categorias/usecases/get_categorias_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/categoria_select.dart';
 import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
+import 'package:ticket_pass/presentation/crearevento/widgets/descripcion.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/fecha.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/image_picker_widget.dart';
 import 'package:ticket_pass/presentation/crearevento/widgets/precio.dart';
@@ -14,7 +16,6 @@ import 'package:ticket_pass/presentation/crearevento/widgets/total_entradas.dart
 import 'package:image_picker/image_picker.dart';
 import '../../../core/configs/theme/app_colors.dart';
 import '../../../domain/categorias/entity/categoria_entity.dart';
-import '../../../domain/categorias/repository/categorias_repository.dart';
 import '../../../domain/crearevento/entity/crear_evento_entity.dart';
 import '../../../domain/crearevento/usescases/crear_evento_caso_de_uso.dart';
 import '../../../service_locator.dart';
@@ -79,7 +80,7 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
             child: Form(
               key: _formKey,
               child: Column(
@@ -99,7 +100,7 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
                         )
                       : const Center(child: CircularProgressIndicator()),
                   EntradaTexto(controller: _nombreController, label: 'nombre'),
-                  EntradaTexto(
+                  Descripcion(
                     controller: _descripcionController,
                     label: 'Descripción',
                   ),

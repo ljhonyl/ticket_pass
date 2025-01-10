@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
 import 'package:ticket_pass/common/widgets/botones/boton_de_carga.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/data/venta/models/entrada_requerida_model.dart';
 import 'package:ticket_pass/domain/evento/entity/evento_entity.dart';
 import 'package:ticket_pass/domain/venta/usescases/get_entradas_en_venta_caso_de_uso.dart';
@@ -46,7 +47,7 @@ class PasarACompra extends StatelessWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
             child: BotonDeCarga(
               onPressed: () {
                 context.read<BotonStateCubit>().finalizar(

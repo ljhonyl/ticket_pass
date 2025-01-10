@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/domain/misventos/entity/mi_evento_entity.dart';
 import 'package:ticket_pass/presentation/misentradas/pages/mis_entradas_page.dart';
 
@@ -25,9 +26,9 @@ class MiEventoCard extends StatelessWidget {
       },
       child: Card(
         elevation: 4,
-        margin: const EdgeInsets.all(8),
+        margin: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.02),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

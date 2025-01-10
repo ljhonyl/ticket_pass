@@ -20,6 +20,7 @@ import 'package:ticket_pass/data/misentradas/repository/mis_entradas_repository_
 import 'package:ticket_pass/data/misentradas/service/mis_entradas_firebase_service.dart';
 import 'package:ticket_pass/data/miseventos/repository/mis_eventos_repository_impl.dart';
 import 'package:ticket_pass/data/miseventos/source/mis_eventos_firebase_service.dart';
+import 'package:ticket_pass/data/permisos/repository/permisos_repository_impl.dart';
 import 'package:ticket_pass/data/venta/repository/venta_repository_impl.dart';
 import 'package:ticket_pass/data/venta/source/venta_firebase_service.dart';
 import 'package:ticket_pass/domain/auth/usecases/iniciar_sesion_caso_de_uso.dart';
@@ -50,6 +51,8 @@ import 'package:ticket_pass/domain/evento/usescases/get_proximamente_caso_de_uso
 import 'package:ticket_pass/domain/misentradas/repository/mis_entradas_repository.dart';
 import 'package:ticket_pass/domain/misentradas/usescases/get_mis_compras_caso_de_uso.dart';
 import 'package:ticket_pass/domain/misventos/usescases/get_mis_eventos_caso_de_uso.dart';
+import 'package:ticket_pass/domain/permisos/repository/permisos_repository.dart';
+import 'package:ticket_pass/domain/permisos/usescases/pedir_permisos_caso_de_uso.dart';
 import 'package:ticket_pass/domain/venta/repository/venta_repository.dart';
 import 'package:ticket_pass/domain/venta/usescases/get_entradas_en_venta_caso_de_uso.dart';
 
@@ -161,11 +164,21 @@ Future<void> iniciarDependencias() async {
 
   // ----------------- Cerrar Sesion -----------------
   sl.registerSingleton<CerrarSesionFirebaseService>(
-      CerrarSesionFirebaseServiceImpl());
+      CerrarSesionFirebaseServiceImpl()
+  );
 
   sl.registerSingleton<CerrarSesionRepository>(CerrarSesionRepositoryImpl());
 
   sl.registerSingleton<CerrarSesionCasoDeUso>(CerrarSesionCasoDeUso());
+
+  // ----------------- Permisos -----------------
+  sl.registerSingleton<PermisosRepository>(
+      PermisosRepositoryImpl()
+  );
+
+  sl.registerSingleton<PedirPermisosCasoDeUso>(
+      PedirPermisosCasoDeUso()
+  );
 
   // ----------------- ImagePicker -----------------
   sl.registerSingleton<ImagePicker>(ImagePicker());

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/domain/compra/entity/compra_entity.dart';
 import 'package:ticket_pass/presentation/styles/app_styles.dart';
 import 'entrada_card.dart';
@@ -20,9 +21,9 @@ class CompraCard extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      margin: const EdgeInsets.all(8),
+      margin: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.02),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

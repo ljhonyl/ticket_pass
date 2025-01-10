@@ -39,9 +39,9 @@ class Home extends StatelessWidget {
           ),
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: SingleChildScrollView(
+      body: Padding(
+        padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
+        child: const SingleChildScrollView(
           child: Column(
             children: [
               Buscador(),

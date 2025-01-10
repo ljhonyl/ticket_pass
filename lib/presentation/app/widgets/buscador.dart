@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/presentation/busqueda/pages/resultado_busqueda.dart';
 
 class Buscador extends StatelessWidget {
@@ -13,7 +14,7 @@ class Buscador extends StatelessWidget {
         AppNavegacion.push(context, const ResultadoBusqueda());
       },
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(12),
+        contentPadding:  EdgeInsets.all(AppSizes.getMaxWidth(context)*0.03),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
         ),

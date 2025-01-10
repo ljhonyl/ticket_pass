@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 
 import '../../../domain/categorias/entity/categoria_entity.dart';
 
@@ -23,7 +24,7 @@ class CategoriaSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: AppSizes.getMaxHeight(context)*0.01),
       child: DropdownButtonFormField<CategoriaEntity>(
         value: selectedCategory,
         onChanged: onChanged,

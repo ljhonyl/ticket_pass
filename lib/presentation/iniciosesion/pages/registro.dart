@@ -87,7 +87,7 @@ class Registro extends StatelessWidget {
     return Container(
       height: 100,
       color: AppColors.fondoSecundario,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: AppSizes.getMaxWidth(context)*0.04),
       child: Center(
         child: Builder(
           builder: (context) {

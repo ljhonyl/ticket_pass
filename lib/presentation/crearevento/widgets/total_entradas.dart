@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 
 class TotalEntradas extends StatelessWidget {
   final TextEditingController controller;
@@ -12,7 +13,7 @@ class TotalEntradas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: AppSizes.getMaxHeight(context)*0.01),
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.number,

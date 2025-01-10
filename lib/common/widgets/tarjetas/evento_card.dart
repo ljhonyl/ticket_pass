@@ -20,7 +20,7 @@ class EventoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavegacion.push(context, DetalleEntrada(entrada: evento));
+        AppNavegacion.push(context, DetalleEvento(entrada: evento));
       },
       child: Container(
         width: width,

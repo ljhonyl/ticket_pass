@@ -62,7 +62,7 @@ class CuentaPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

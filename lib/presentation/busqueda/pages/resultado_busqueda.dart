@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket_pass/common/widgets/gridview/gridview_eventos.dart';
+import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
 import 'package:ticket_pass/domain/evento/usescases/get_evento_por_nombre_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/busqueda/bloc/buscador_cubit.dart';
@@ -32,7 +33,7 @@ class ResultadoBusqueda extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(AppSizes.getMaxWidth(context)*0.04),
           child: Column(
             children: [
               const Buscador(),

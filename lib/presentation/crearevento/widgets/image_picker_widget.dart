@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ticket_pass/domain/permisos/usescases/pedir_permisos_caso_de_uso.dart';
+import 'package:ticket_pass/service_locator.dart';
 
 import '../../styles/app_styles.dart';
 
@@ -22,24 +24,36 @@ class ImagePickerWidget extends StatefulWidget {
 class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> _pickImages() async {
-    final List<XFile> pickedImages = await _picker.pickMultiImage();
+  Future<void> _seleccionarImages() async {
+    var permisoConcedido = await sl<PedirPermisosCasoDeUso>().call();
 
-    if (pickedImages.isNotEmpty) {
-      final List<XFile> updatedImages = List.from(widget.images!);
-      updatedImages
-          .addAll(pickedImages.where((img) => !updatedImages.contains(img)));
-
-      if (updatedImages.length <= 5) {
-        widget.onImagesChanged(updatedImages);
-      } else {
-        var snackbar = const SnackBar(
-          content: Text("Puedes seleccionar hasta 5 imagenes"),
+    permisoConcedido.fold(
+      (error) {
+        var snackbar = SnackBar(
+          content: Text(error),
           behavior: SnackBarBehavior.floating,
         );
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      }
-    }
+      },
+      (data) async {
+        final List<XFile> pickedImages = await _picker.pickMultiImage();
+
+        if (pickedImages.isNotEmpty) {
+          final List<XFile> updatedImages = List.from(widget.images!);
+          updatedImages.addAll(pickedImages.where((img) => !updatedImages.contains(img)));
+
+          if (updatedImages.length <= 5) {
+            widget.onImagesChanged(updatedImages);
+          } else {
+            var snackbar = const SnackBar(
+              content: Text("Puedes seleccionar hasta 5 imágenes"),
+              behavior: SnackBarBehavior.floating,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          }
+        }
+      },
+    );
   }
 
   @override
@@ -48,7 +62,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ElevatedButton(
-          onPressed: _pickImages,
+          onPressed: _seleccionarImages,
           child: Text(
             'Seleccionar Imágenes',
             style: AppStyles.textoBotonesPrimarios.copyWith(fontSize: 14),
