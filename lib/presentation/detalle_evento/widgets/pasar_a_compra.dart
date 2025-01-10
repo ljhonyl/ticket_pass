@@ -28,7 +28,7 @@ class PasarACompra extends StatelessWidget {
 
         return BlocListener<BotonStateCubit, BotonState>(
           listener: (context, state) {
-            if (state is BotonHechoState) {
+            if (state is BotonStateHecho) {
               AppNavegacion.push(
                 context,
                 DetalleCompra(
@@ -37,7 +37,7 @@ class PasarACompra extends StatelessWidget {
                     precioTotal: precioTotal),
               );
             }
-            if (state is BotonErrorState) {
+            if (state is BotonStateError) {
               var snackbar = SnackBar(
                 content: Text(state.msgError),
                 behavior: SnackBarBehavior.floating,

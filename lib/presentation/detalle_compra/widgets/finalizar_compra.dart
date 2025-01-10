@@ -22,10 +22,10 @@ class FinalizarCompra extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<BotonStateCubit, BotonState>(
       listener: (context, state) {
-        if (state is BotonHechoState) {
+        if (state is BotonStateHecho) {
           AppNavegacion.pushReplacement(context, ResumenCompra(eventoId: compra.eventoId, imagen: compra.imagen,));
         }
-        if (state is BotonErrorState) {
+        if (state is BotonStateError) {
           var snackbar = SnackBar(content: Text(state.msgError), behavior: SnackBarBehavior.floating, );
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
         }

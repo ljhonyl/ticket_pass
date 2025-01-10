@@ -32,14 +32,14 @@ class RestablecerPassword extends StatelessWidget {
         create: (context) => BotonStateCubit(),
         child: BlocListener<BotonStateCubit, BotonState>(
           listener: (context, state) {
-            if (state is BotonErrorState) {
+            if (state is BotonStateError) {
               var snackbar = SnackBar(
                 content: Text(state.msgError),
                 behavior: SnackBarBehavior.floating,
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
-            if (state is BotonHechoState) {
+            if (state is BotonStateHecho) {
               var snackbar = const SnackBar(
                 content: Text("Email enviado"),
                 behavior: SnackBarBehavior.floating,

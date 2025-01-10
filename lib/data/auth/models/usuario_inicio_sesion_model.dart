@@ -1,8 +1,8 @@
-class UsuarioInicioSesion {
+class UsuarioInicioSesionModel {
   String ? email;
   String ? password;
 
-  UsuarioInicioSesion({
+  UsuarioInicioSesionModel({
     required this.email,
     required this.password
   });

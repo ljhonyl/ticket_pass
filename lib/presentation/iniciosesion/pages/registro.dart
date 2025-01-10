@@ -6,7 +6,7 @@ import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/helper/navigator/app_navegacion.dart';
 import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
 import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
-import 'package:ticket_pass/data/auth/models/usuario.dart';
+import 'package:ticket_pass/domain/auth/entity/usuario_entity.dart';
 import 'package:ticket_pass/domain/auth/usecases/registro_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/inicio_sesion.dart';
 import 'package:ticket_pass/presentation/iniciosesion/widgets/password.dart';
@@ -40,14 +40,14 @@ class Registro extends StatelessWidget {
         ),
         body: BlocListener<BotonStateCubit, BotonState>(
           listener: (context, state) {
-            if (state is BotonErrorState) {
+            if (state is BotonStateError) {
               var snackbar = SnackBar(
                 content: Text(state.msgError),
                 behavior: SnackBarBehavior.floating,
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
-            if(state is BotonHechoState){
+            if(state is BotonStateHecho){
               AppNavegacion.pushReplacement(context, InicioSesion());
             }
           },
@@ -94,7 +94,7 @@ class Registro extends StatelessWidget {
             return BotonDeCarga(
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
-                  var usuario = Usuario(
+                  var usuario = UsuarioEntity(
                     nombre: _nombreCon.text,
                     apellidos: _apellidosCon.text,
                     email: _emailCon.text,

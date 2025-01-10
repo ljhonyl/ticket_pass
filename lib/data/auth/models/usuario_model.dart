@@ -1,15 +1,14 @@
-class Usuario {
+class UsuarioModel {
   String ? nombre;
   String ? apellidos;
   String ? email;
   String ? password;
-  int ? edad;
-  List<String> ? tipoEntradasPreferidas;
 
-  Usuario({
+  UsuarioModel({
     required this.nombre,
     required this.apellidos,
     required this.email,
     required this.password
   });
 }
+

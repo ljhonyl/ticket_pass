@@ -122,7 +122,7 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
                   const SizedBox(height: 20),
                   BlocListener<BotonStateCubit, BotonState>(
                     listener: (context, state) {
-                      if (state is BotonHechoState) {
+                      if (state is BotonStateHecho) {
                         var snackbar = const SnackBar(
                           content: Text("Evento Creado"),
                           behavior: SnackBarBehavior.floating,
@@ -140,7 +140,7 @@ class _CrearEventoPageState extends State<CrearEventoPage> {
                         _fechaController.clear();
                         _totalEntradasController.clear();
                       }
-                      if (state is BotonErrorState) {
+                      if (state is BotonStateError) {
                         var snackbar = SnackBar(
                           content: Text(state.msgError),
                           behavior: SnackBarBehavior.floating,

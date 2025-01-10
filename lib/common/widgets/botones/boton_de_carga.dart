@@ -24,7 +24,7 @@ class BotonDeCarga extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BotonStateCubit, BotonState>(
         builder: (context,state){
-          if (state is BotonCargandoState){
+          if (state is BotonStateCargando){
             return _cargando();
           }
           else{

@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ticket_pass/data/auth/models/usuario_inicio_sesion.dart';
+import 'package:ticket_pass/data/auth/models/usuario_inicio_sesion_model.dart';
 
-import '../models/usuario.dart';
+import '../models/usuario_model.dart';
 
 abstract class InicioSesionFirebaseService {
-  Future<Either> registrarse(Usuario usuario);
-  Future<Either> iniciarSesion(UsuarioInicioSesion usuario);
+  Future<Either> registrarse(UsuarioModel usuario);
+  Future<Either> iniciarSesion(UsuarioInicioSesionModel usuario);
   Future<Either> restablecerPassword(String email);
   Future<bool> sesionIniciada();
 }
 
 class InicioSesionFirebaseServiceImpl extends InicioSesionFirebaseService{
   @override
-  Future<Either> registrarse(Usuario usuario) async{
+  Future<Either> registrarse(UsuarioModel usuario) async{
     try{
       var usuarioFirebase = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: usuario.email!,
@@ -49,7 +49,7 @@ class InicioSesionFirebaseServiceImpl extends InicioSesionFirebaseService{
   }
 
   @override
-  Future<Either> iniciarSesion(UsuarioInicioSesion usuario) async {
+  Future<Either> iniciarSesion(UsuarioInicioSesionModel usuario) async {
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: usuario.email!,

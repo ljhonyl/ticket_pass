@@ -6,7 +6,7 @@ import 'package:ticket_pass/common/bloc/button/boton_state_cubit.dart';
 import 'package:ticket_pass/common/widgets/entradatexto/entrada_texto.dart';
 import 'package:ticket_pass/core/configs/layaout/app_sizes.dart';
 import 'package:ticket_pass/core/configs/theme/app_colors.dart';
-import 'package:ticket_pass/data/auth/models/usuario_inicio_sesion.dart';
+import 'package:ticket_pass/domain/auth/entity/usuario_inicio_sesion_entity.dart';
 import 'package:ticket_pass/domain/auth/usecases/iniciar_sesion_caso_de_uso.dart';
 import 'package:ticket_pass/presentation/ayuda/ayuda_page.dart';
 import 'package:ticket_pass/presentation/iniciosesion/pages/registro.dart';
@@ -58,14 +58,14 @@ class InicioSesion extends StatelessWidget {
             create: (context) => BotonStateCubit(),
             child: BlocListener<BotonStateCubit, BotonState>(
               listener: (context, state) {
-                if (state is BotonErrorState) {
+                if (state is BotonStateError) {
                   var snackbar = SnackBar(
                     content: Text(state.msgError),
                     behavior: SnackBarBehavior.floating,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 }
-                if(state is BotonHechoState){
+                if(state is BotonStateHecho){
                   AppNavegacion.pushReplacement(context, const MenuInferior());
                 }
               },
@@ -112,7 +112,7 @@ class InicioSesion extends StatelessWidget {
       builder: (context) {
         return BotonDeCarga(
             onPressed: (){
-              var usuario = UsuarioInicioSesion(email: _emailCon.text, password: _passwordCon.text);
+              var usuario = UsuarioInicioSesionEntity(email: _emailCon.text, password: _passwordCon.text);
               context.read<BotonStateCubit>().finalizar(
                   casoDeUso: IniciarSesionCasoDeUso(),
                   params: usuario

@@ -8,17 +8,17 @@ class BotonStateCubit extends Cubit<BotonState> {
 
   Future<void> finalizar({dynamic params, required CasoDeUso casoDeUso}) async {
     //Cuando se llama al metodo este pasa a cargando
-    emit(BotonCargandoState());
+    emit(BotonStateCargando());
     try {
       Either respuesta = await casoDeUso.call(params: params);
 
       respuesta.fold((error) {
-        emit(BotonErrorState(msgError: error));
+        emit(BotonStateError(msgError: error));
       }, (data) {
-        emit(BotonHechoState(params: data));
+        emit(BotonStateHecho(params: data));
       });
     } catch (e) {
-      emit(BotonErrorState(msgError: e.toString()));
+      emit(BotonStateError(msgError: e.toString()));
     }
   }
 }

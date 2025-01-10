@@ -49,6 +49,7 @@ dependencies:
   diacritic: ^0.1.6
   flutter_stripe: ^11.3.0
   syncfusion_flutter_pdfviewer: ^28.1.38
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
