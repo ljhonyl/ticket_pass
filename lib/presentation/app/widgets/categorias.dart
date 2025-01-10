@@ -68,7 +68,7 @@ class Categorias extends StatelessWidget {
                   padding:
                        EdgeInsets.symmetric(horizontal: AppSizes.getMaxWidth(context)*0.03, vertical: AppSizes.getMaxHeight(context)*0.01),
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.2),
+                    color:const Color.fromRGBO(142, 108, 239, 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
