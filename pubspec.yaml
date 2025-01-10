@@ -50,6 +50,15 @@ dependencies:
   flutter_stripe: ^11.3.0
   syncfusion_flutter_pdfviewer: ^28.1.38
   qr_flutter: ^4.1.0
+  flutter_launcher_icons: ^0.14.2
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/tp_icon.png"
+  min_sdk_android: 23 # android min sdk min:16, default 21
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icon/tp_icon.png"
 
 dev_dependencies:
   flutter_test:
